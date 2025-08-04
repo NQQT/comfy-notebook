@@ -4,10 +4,10 @@ import torch
 import numpy as np
 from PIL import Image
 import base64
-from ..utils.gif import images_to_gif
-from ..utils.webm import images_to_webm
-from ..utils.mp4 import images_to_mp4
-from ..utils.filename import generate_filename
+from ...utils.gif import images_to_gif
+from ...utils.webm import images_to_webm
+from ...utils.mp4 import images_to_mp4
+from ...utils.filename import generate_filename
 
 from server import PromptServer
 
