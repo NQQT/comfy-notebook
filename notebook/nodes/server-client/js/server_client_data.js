@@ -55,6 +55,9 @@ function downloadFile(filename, format, base64DataOrRaw) {
     link.href = `data:${getMineType(format)};base64,${base64DataOrRaw}`;
     link.download = filename;
 
+    // Triggering file name download
+    console.log('downloading: ' + filename);
+
     // Append to document, click, and remove
     document.body.appendChild(link);
     link.click();
