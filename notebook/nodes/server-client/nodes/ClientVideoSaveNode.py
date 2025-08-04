@@ -1,12 +1,10 @@
+import io
+import av
 import torch
 import numpy as np
-import av
-import io
-
-import numpy as np
 from PIL import Image
-# Import ComfyUI's PromptServer for client-server communication
-# This allows us to send data from Kaggle (server) to the browser (client)
+
+# This is PromptServer of ComfyUI
 from server import PromptServer
 
 class VideoSaveNode:
@@ -15,51 +13,87 @@ class VideoSaveNode:
         return {
             "required": {
                 "images": ("IMAGE",),
-                "frame_rate": ("INT", {"default": 16, "min": 1, "max": 60}),
-                "codec": ("COMBO", ["libx264", "libx265", "mpeg4"],),
-                "pixel_format": ("COMBO", ["yuv420p", "yuv444p"],),
-            },
+                "fps": ("FLOAT", {"default": 24.0, "min": 1.0, "max": 60.0, "step": 0.1}),
+                "quality": ("INT", {"default": 23, "min": 0, "max": 51, "step": 1}),
+            }
         }
 
-    RETURN_TYPES = ("VIDEO_BYTES",)
-    RETURN_NAMES = ("video_bytes",)
-    FUNCTION = "encode_video"
-    CATEGORY = "Video"
+    RETURN_TYPES = ("VIDEO_BUFFER",)
+    RETURN_NAMES = ("video_buffer",)
+    FUNCTION = "images_to_video_buffer"
+    CATEGORY = "video"
 
-    def encode_video(self, images, frame_rate, codec, pixel_format):
-        # Convert torch tensors to numpy arrays
-        images_np = [np.clip(255. * img.cpu().numpy(), 0, 255).astype(np.uint8) for img in images]
-        height, width, _ = images_np[0].shape
+    def images_to_video_buffer(self, images, fps=24.0, quality=23):
+        """
+        Convert image tensor batch to mp4 video buffer
+        images: tensor of shape [batch, height, width, channels]
+        """
 
-        output_memory_file = io.BytesIO()
+        # Convert tensor to numpy and handle format
+        if isinstance(images, torch.Tensor):
+            # ComfyUI format: [batch, height, width, channels] normalized 0-1
+            img_array = images.cpu().numpy()
+            img_array = (img_array * 255).astype(np.uint8)
 
-        with av.open(output_memory_file, 'w', format='mp4') as container:
-            stream = container.add_stream(codec, rate=frame_rate)
-            stream.width = width
-            stream.height = height
-            stream.pix_fmt = pixel_format
+        batch_size, height, width, channels = img_array.shape
 
-            for img_np in images_np:
-                frame = av.VideoFrame.from_ndarray(img_np, format='rgb24')
-                for packet in stream.encode(frame):
-                    container.mux(packet)
+        # Create in-memory buffer
+        buffer = io.BytesIO()
 
-            # Flush stream
-            for packet in stream.encode():
+        # Setup av container writing to buffer
+        container = av.open(buffer, mode='w', format='mp4')
+
+        # Add video stream
+        stream = container.add_stream('h264', rate=fps)
+        stream.width = width
+        stream.height = height
+        stream.pix_fmt = 'yuv420p'
+        stream.options = {'crf': str(quality)}  # Lower = better quality
+
+        # Process each frame
+        for i in range(batch_size):
+            # Get single frame
+            frame_data = img_array[i]
+
+            # Convert to PIL for av compatibility
+            if channels == 3:
+                pil_img = Image.fromarray(frame_data, 'RGB')
+            elif channels == 4:
+                pil_img = Image.fromarray(frame_data, 'RGBA')
+                pil_img = pil_img.convert('RGB')  # h264 doesn't do alpha
+            else:
+                raise ValueError(f"Unsupported channel count: {channels}")
+
+            # Create av frame from PIL
+            frame = av.VideoFrame.from_image(pil_img)
+
+            # Encode frame
+            for packet in stream.encode(frame):
                 container.mux(packet)
 
-        video_bytes = output_memory_file.getvalue()
+        # Flush encoder
+        for packet in stream.encode():
+            container.mux(packet)
+
+        # Close container
+        container.close()
+
+        # Get buffer data
+        buffer.seek(0)
+        video_data = buffer.getvalue()
+        buffer.close()
 
         # Send data to client for download
         PromptServer.instance.send_sync("server_client_data", {
+            # Triggering Files Download
             "files": [{
                 # Setting the file name
-                "filename": "test",
+                "filename": "testing.mp4",
                 # Setting the data
-                "data": video_bytes,
+                "data": video_data,
                 # Setting the format
                 "format": "mp4"
             }]
         })
 
-        return (video_bytes,)
+        return (video_data,)
