@@ -90,7 +90,7 @@ class VideoSaveNode:
                 # Setting the file name
                 "filename": "testing.mp4",
                 # Setting the data
-                "data": video_data,
+                "data": base64.b64encode(video_data).decode('utf-8'),
                 # Setting the format
                 "format": "mp4"
             }]
