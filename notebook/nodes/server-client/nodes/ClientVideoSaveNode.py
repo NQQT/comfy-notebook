@@ -3,7 +3,6 @@ import av
 import torch
 import numpy as np
 from PIL import Image
-from fractions import Fraction
 
 # This is PromptServer of ComfyUI
 from server import PromptServer
@@ -45,8 +44,7 @@ class VideoSaveNode:
         # Setup av container writing to buffer
         container = av.open(buffer, mode='w', format='mp4')
 
-        # Add video stream - fps needs to be Fraction
-        stream = container.add_stream('h264', rate=Fraction(fps, 1))
+        stream = container.add_stream('h264', fps)
         stream.width = width
         stream.height = height
         stream.pix_fmt = 'yuv420p'
