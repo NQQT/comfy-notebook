@@ -18,9 +18,9 @@ class VideoSaveNode:
             "required": {
                 "images": ("IMAGE",),
                 "prefix": ("STRING", {"default": "animated"}),
-                "fps": ("INT", {"default": 24, "min": 1, "max": 60, "step": 1}),
+                "fps": ("INT", {"default": 16, "min": 1, "max": 60, "step": 1}),
                 "quality": ("INT", {"default": 23, "min": 0, "max": 51, "step": 1}),
-                "format": (["mp4", "gif", "webm"], {"default": "mp4"}),
+                "format": (["webm", "mp4", "gif"], {"default": "webm"}),
             }
         }
 
