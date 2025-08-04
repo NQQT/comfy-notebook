@@ -22,6 +22,7 @@ class VideoSaveNode:
     RETURN_NAMES = ("video_buffer",)
     FUNCTION = "images_to_video_buffer"
     CATEGORY = "video"
+    OUTPUT_NODE = True
 
     def images_to_video_buffer(self, images, fps=24.0, quality=23):
         """
