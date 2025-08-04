@@ -13,7 +13,7 @@ class VideoSaveNode:
         return {
             "required": {
                 "images": ("IMAGE",),
-                "fps": ("FLOAT", {"default": 24.0, "min": 1.0, "max": 60.0, "step": 0.1}),
+                "fps": ("INT", {"default": 24, "min": 1, "max": 60, "step": 1}),
                 "quality": ("INT", {"default": 23, "min": 0, "max": 51, "step": 1}),
             }
         }
@@ -22,9 +22,8 @@ class VideoSaveNode:
     RETURN_NAMES = ("video_buffer",)
     FUNCTION = "images_to_video_buffer"
     CATEGORY = "video"
-    OUTPUT_NODE = True
 
-    def images_to_video_buffer(self, images, fps=24.0, quality=23):
+    def images_to_video_buffer(self, images, fps=24, quality=23):
         """
         Convert image tensor batch to mp4 video buffer
         images: tensor of shape [batch, height, width, channels]
@@ -44,12 +43,12 @@ class VideoSaveNode:
         # Setup av container writing to buffer
         container = av.open(buffer, mode='w', format='mp4')
 
-        # Add video stream
-        stream = container.add_stream('h264', rate=fps)
+        # Add video stream - fps needs to be Fraction
+        stream = container.add_stream('h264', rate=Fraction(fps, 1))
         stream.width = width
         stream.height = height
         stream.pix_fmt = 'yuv420p'
-        stream.options = {'crf': str(quality)}  # Lower = better quality
+        stream.options = {'crf': str(quality)}
 
         # Process each frame
         for i in range(batch_size):
