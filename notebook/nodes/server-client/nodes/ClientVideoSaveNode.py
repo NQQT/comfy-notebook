@@ -3,6 +3,7 @@ import av
 import torch
 import numpy as np
 from PIL import Image
+import base64
 
 # This is PromptServer of ComfyUI
 from server import PromptServer
