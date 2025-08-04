@@ -8,7 +8,6 @@ from PIL import Image
 # This allows us to send data from Kaggle (server) to the browser (client)
 from server import PromptServer
 
-
 class ImageSaveNode:
     """
     Custom ComfyUI node that saves generated images directly to the local PC
@@ -21,7 +20,7 @@ class ImageSaveNode:
             "required": {
                 "images": ("IMAGE",),
                 "prefix": ("STRING", {"default": "kaggle_generated"}),
-                "file_format": (["PNG", "JPEG"], {"default": "PNG"}),
+                "file_format": (["PNG", "JPEG", "GIF"], {"default": "PNG"}),
             }
         }
 
@@ -67,14 +66,18 @@ class ImageSaveNode:
 
                 # Add image data to list
                 image_data_list.append({
+                    # Setting the file name
                     "filename": full_filename,
+                    # Setting the data
                     "data": img_str,
+                    # Setting the format
                     "format": file_format.lower()
                 })
 
             # Send data to client for download
-            PromptServer.instance.send_sync("kaggle_local_save_data", {
-                "images": image_data_list
+            PromptServer.instance.send_sync("server_client_data", {
+                # Triggering Files Download
+                "files": image_data_list
             })
 
             # Return original images to allow continued workflow
@@ -85,7 +88,7 @@ class ImageSaveNode:
             error_msg = f"Error processing images: {str(e)}"
 
             # SEnding to Local Save error
-            PromptServer.instance.send_sync("kaggle_local_save_error", {
+            PromptServer.instance.send_sync("server_client_data_error", {
                 "message": error_msg
             })
             raise Exception(error_msg)

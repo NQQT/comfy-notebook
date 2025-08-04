@@ -1,10 +1,13 @@
-from .nodes.LocalImageSaveNode import ImageSaveNode
+from .nodes.ClientImageSaveNode import ImageSaveNode
+from .nodes.ClientVideoSaveNode import VideoSaveNode
 
 # Node Registration for ComfyUI
 NODE_CLASS_MAPPINGS = {
-    "LocalImageSaveNode": ImageSaveNode
+    "ClientImageSaveNode": ImageSaveNode,
+    "ClientVideoSaveNode": VideoSaveNode
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LocalImageSaveNode": "Local Image Save"
+    "ClientImageSaveNode": "Client Image Save",
+    "ClientVideoSaveNode": "Client Video Save"
 }
