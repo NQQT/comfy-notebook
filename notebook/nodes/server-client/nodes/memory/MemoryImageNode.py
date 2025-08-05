@@ -12,7 +12,7 @@ class MemoryImageNode:
         self.cache = {}  # Dictionary to store images in memory
 
     @classmethod
-    def INPUT_TYPES(cls):
+    def INPUT_TYPES(s):
         return {
             "required": {
                 "cache_key": ("STRING", {"default": "image_1"}),

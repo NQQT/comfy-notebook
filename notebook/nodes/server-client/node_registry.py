@@ -1,6 +1,6 @@
 from .nodes.client.ClientImageSaveNode import ImageSaveNode
 from .nodes.client.ClientVideoSaveNode import VideoSaveNode
-from .nodes.memory import MemoryImageNode
+from .nodes.memory.MemoryImageNode import MemoryImageNode
 
 # Node Registration for ComfyUI
 NODE_CLASS_MAPPINGS = {
