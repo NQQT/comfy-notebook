@@ -5,6 +5,10 @@ import { api } from "../../../scripts/api.js";
 console.log("This is the app: ",window.comfyAPI.app.app)
 console.log("This is the api: ",window.comfyAPI.api)
 
+// This is the lite graph
+const litegraph = window.comfyAPI.app.app.graph;
+console.log("lite graph is here: ",litegraph)
+
 // Add event listener for our custom node's messages
 app.registerExtension({
     name: "ServerClientConnection",
