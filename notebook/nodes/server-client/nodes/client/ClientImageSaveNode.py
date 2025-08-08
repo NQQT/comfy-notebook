@@ -17,7 +17,8 @@ class ImageSaveNode:
     @classmethod
     def INPUT_TYPES(s):
         return {
-            "required": {
+            "required": {},
+            "optional": {
                 "images": ("IMAGE",),
                 "prefix": ("STRING", {"default": "kaggle_generated"}),
                 "file_format": (["PNG", "JPEG", "GIF"], {"default": "PNG"}),
