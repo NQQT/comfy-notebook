@@ -1,0 +1,8 @@
+pyproject.toml
+readme.md
+src/noobish/__init__.py
+src/noobish.egg-info/PKG-INFO
+src/noobish.egg-info/SOURCES.txt
+src/noobish.egg-info/dependency_links.txt
+src/noobish.egg-info/top_level.txt
+src/noobish/setup/venv/build.py
