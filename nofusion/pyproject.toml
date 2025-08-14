@@ -3,13 +3,13 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "noobish"
+name = "nofusion"
 version = "0.0.1"
 authors = [
-  { name="Example Author", email="author@example.com" },
+  { name="Erosire", email="author@erosire.com" },
 ]
 
-description = "A small example package"
+description = "to run diffusion model easier"
 readme = "readme.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -19,5 +19,5 @@ classifiers = [
 license = "MIT"
 
 [project.urls]
-Homepage = "https://github.com/nqqt/noobish"
-Issues = "https://github.com/nqqt/noobish/issues"
+Homepage = "https://github.com/nqqt/nofusion"
+Issues = "https://github.com/nqqt/nofusion/issues"

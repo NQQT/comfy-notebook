@@ -16,7 +16,7 @@ def setup_virtualenv(root_dir = os.getcwd(), python = sys.executable):
         return None
 
     # First, install virtualenv
-    ipython.system(f"{python} -m pip install virtualenv")
+    get_ipython().system(f"{python} -m pip install virtualenv")
 
     def find_bin_folders(folder_path):
         bin_folders = []
