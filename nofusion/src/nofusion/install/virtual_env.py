@@ -74,4 +74,4 @@ def install_virtual_env(data=variables):
 
 
 # Only export the install one
-__all__ = [install_virtual_env]
+__all__ = ["install_virtual_env"]
