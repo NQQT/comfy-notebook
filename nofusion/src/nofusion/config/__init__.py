@@ -1,1 +1,1 @@
-from variables import *
+from .variables import *
