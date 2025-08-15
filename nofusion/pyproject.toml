@@ -6,7 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "nofusion"
 version = "0.0.1"
 authors = [
-  { name="Erosire", email="author@erosire.com" },
+    { name = "Erosire", email = "author@erosire.com" },
+]
+dependencies = [
+    "noobish > 0.0.0"
 ]
 
 description = "to run diffusion model easier"

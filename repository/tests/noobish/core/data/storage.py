@@ -37,3 +37,31 @@ def test_accessing_storage():
     assert variables("fruit") == "banana"
     # Accessing invalid field returns a new dictionary
     assert variables("colour") == {}
+
+
+def test_updating_storage():
+    # Initialisation
+    variables = data_storage({
+        "fruit": "banana",
+        "animal": "cat",
+        "person": "james",
+        "family": {
+            "father": "john",
+            "mother": "jane"
+        }
+    })
+
+    # Updating the fruit
+    variables({"fruit": "apple"})
+    # For Accessing Fruits
+    assert variables("fruit") == "apple"
+    # For testing full access
+    assert variables() == {
+        "fruit": "apple",
+        "animal": "cat",
+        "person": "james",
+        "family": {
+            "father": "john",
+            "mother": "jane"
+        }
+    }

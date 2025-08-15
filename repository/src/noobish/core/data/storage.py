@@ -1,4 +1,4 @@
-from ..dict import dict_access
+from ..dict import dict_access, dict_update
 from ..type import type_switch
 
 
@@ -12,13 +12,14 @@ def data_storage(store=None):
     def accessor(data=None):
         nonlocal store
 
+        # Base on the type, different things will happen
         return type_switch(data, {
             # if it is a string, then return the store value
-            "str": lambda key: dict_access(store, key),
-            # merging recursively
-            "dict": lambda updated: dict_merge(store, updated),
+            "str": lambda args: dict_access(store, args['value']),
+            # update dictionary
+            "dict": lambda args: dict_update(store, args['value']),
             # By default, simply return the store data
-            "default": lambda args: store
+            "default": lambda: store
         })
 
     # Return the accessor to be used
