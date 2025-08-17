@@ -9,18 +9,21 @@ from noobish.core.path.symbolic import path_symbolic_python3
 
 # List of library to install
 def install_libraries(pip):
+    package_dir = os.path.dirname(__file__)
+    # Setting up the minimum requirements
+    minimum_requirement = os.path.join(package_dir, 'requirement', "minimum.txt")
+
     # Executing Shell Command
     shell_command(
         f"cd {variables('root')}",
         f"{pip} install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121",
         f"{pip} install tensorflow[and-cuda]",
-        "wget https://q4j3.c11.e2-5.dev/downloads/req.txt",
-        f"{pip} install -r {variables('root')}/req.txt"
+        f"{pip} install -r {minimum_requirement}"
     )
 
 
-# Design to install virtual env in all environment type
-def install_virtual_env(data=variables):
+# This is to install virtual env for python
+def install_venv(data=variables):
     # Getting Python
     python = variables('python')
 
@@ -74,4 +77,4 @@ def install_virtual_env(data=variables):
 
 
 # Only export the install one
-__all__ = ["install_virtual_env"]
+__all__ = ["install_venv"]
