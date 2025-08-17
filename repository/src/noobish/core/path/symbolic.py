@@ -15,6 +15,17 @@ def path_symbolic_python3():
     return path_symbolic_root(which_process.stdout.strip())
 
 
+def path_symbolic_create(original_location: str, symbolic_location: str):
+    # 1. Get the initial path as a string
+    which_process = subprocess.run(
+        ["which", "python3"],
+        capture_output=True,
+        text=True,
+        check=True  # This will raise an exception if the command fails
+    )
+    return which_process.stdout.strip()
+
+
 def path_symbolic_root(path: str):
     """
     Finds the ultimate target of a symbolic link path for the python executable
@@ -53,4 +64,4 @@ def path_symbolic_root(path: str):
         return None
 
 
-__all__ = ["path_symbolic_root"]
+__all__ = ["path_symbolic_root", "path_symbolic_create"]

@@ -12,6 +12,7 @@ def configure_variables():
     # Updating all the directory path
     variables({
         "dir": {
+            "comfy": working_dir,
             # These are all comfy directory
             "custom_nodes": f"{working_dir}/custom_nodes",
         }

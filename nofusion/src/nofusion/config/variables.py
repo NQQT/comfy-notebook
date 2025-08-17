@@ -11,5 +11,7 @@ variables = data_storage({
     # The root directory is whatever the current directory is when first pull
     "root": os.getcwd(),
     # Initial Data Configuration
-    "name": "ComfyUI"
+    "name": {
+        "comfy": "ComfyUI",
+    }
 })

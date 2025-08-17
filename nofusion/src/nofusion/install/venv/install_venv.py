@@ -22,6 +22,18 @@ def install_libraries(pip):
     )
 
 
+# Use Virtual Environment
+def use_venv(data=variables):
+    # Installing Virtual Env
+    venv_python_path = install_venv(data)
+
+    # Updating Variables
+    variables({
+        "python": venv_python_path,
+        "pip": f"{venv_python_path} -m pip",
+    })
+
+
 # This is to install virtual env for python
 def install_venv(data=variables):
     # Getting Python
@@ -77,4 +89,4 @@ def install_venv(data=variables):
 
 
 # Only export the install one
-__all__ = ["install_venv"]
+__all__ = ["install_venv", "use_venv"]
