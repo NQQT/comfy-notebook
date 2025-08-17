@@ -31,16 +31,16 @@ def fetch_custom_node(value):
     # Reading the Folder Name
     folder_name = string_extract_filename(data.get("git"))
 
-    shell_command(f"cd {variables("dir.custom_nodes")}")
+    shell_command(f"cd {variables('dir.custom_nodes')}")
 
     # Remove whatever version it is
     shell_command(f"rm -rf {folder_name}")
 
     # Cloning from git
-    shell_command(f"git clone {data.get("git")}")
+    shell_command(f"git clone {data.get('git')}")
 
     # Go into the folder
-    shell_command(f"cd {variables("dir.custom_nodes")}/{folder_name}")
+    shell_command(f"cd {variables('dir.custom_nodes')}/{folder_name}")
 
     # Do we need checkout to a specific version?
     commit = data.get("commit")
@@ -50,10 +50,10 @@ def fetch_custom_node(value):
 
     # Install the requirement (if it exists)
     if os.path.exists("requirements.txt"):
-        shell_command(f"{variables("pip")} install -r requirements.txt")
+        shell_command(f"{variables('pip')} install -r requirements.txt")
 
     # Returning to the working root directory
-    shell_command(f"cd {variables("root")}")
+    shell_command(f"cd {variables('root')}")
 
     # Clearing the output to show python has been updated
     # clear_output()
