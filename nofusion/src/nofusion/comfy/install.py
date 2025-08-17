@@ -1,3 +1,5 @@
+import os
+
 from noobish.core import path_remove, path_symbolic_create
 from .config import configure_variables
 from .location import location_ipadaptor, location_checkpoints, location_diffusion_models, location_clip, \
@@ -15,15 +17,13 @@ def install_comfy_ui(checkout_version="37d620a6b85f61b824363ed8170db373726ca45a"
     root_dir = variables("root")
     comfy_name = variables("name.comfy")
 
+    os.chdir(root_dir)
     # Executing Shell Commands
-    shell_command(
-        # Go back to the main root directory
-        f"cd {root_dir}",
-        # Cloning Comfy UI
-        f"git clone https://github.com/comfyanonymous/ComfyUI.git {comfy_name}",
-        f"cd {comfy_name}",
-        f"git checkout {checkout_version}",
-    )
+    # Cloning Comfy UI
+    shell_command(f"git clone https://github.com/comfyanonymous/ComfyUI.git {comfy_name}")
+
+    os.chdir(f"{root_dir}/{comfy_name}")
+    shell_command(f"git checkout {checkout_version}")
 
     pip = variables("pip")
 

@@ -1,8 +1,17 @@
 from ..config import variables
 
 
+def location_comfy_ui():
+    return f"{variables('root')}/{variables('name.comfy')}"
+
+
+# Return the location of the custom nodes
+def location_custom_nodes():
+    return f"{location_comfy_ui()}/custom_nodes"
+
+
 def location_models():
-    return f"{variables('root')}/{variables('name.comfy')}/models"
+    return f"{location_comfy_ui()}/models"
 
 
 def location_ipadaptor():

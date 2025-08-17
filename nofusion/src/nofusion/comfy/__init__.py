@@ -2,4 +2,5 @@
 from .config import *
 from .install import *
 from .location import *
+from .tunnel import *
 from .utils import *
