@@ -4,6 +4,7 @@ from noobish.core import path_remove, path_symbolic_create
 from .config import configure_variables
 from .location import location_ipadaptor, location_checkpoints, location_diffusion_models, location_clip, \
     location_clip_vision, location_text_encoders, location_vae, location_unet
+from .utils import fetch_custom_node
 from ..config import variables
 from ..shell import shell_command
 
@@ -65,6 +66,9 @@ def install_comfy_ui(checkout_version="37d620a6b85f61b824363ed8170db373726ca45a"
     path_symbolic_create("/tmp/models/text_encoders", location_text_encoders())
     path_symbolic_create("/tmp/models/vae", location_vae())
     path_symbolic_create("/tmp/models/unet", location_unet())
+
+    # Download Comfy UI Manager
+    fetch_custom_node("https://github.com/Comfy-Org/ComfyUI-Manager")
 
     # Additional installation to use
     # !{pip} install pillow==10.2.0 insightface onnxruntime onnxruntime-gpu

@@ -17,4 +17,4 @@ def start_pinggy_tunnel(args=""):
     os.chdir(root_dir)
 
     # Running Command
-    shell_command(f"{python} pinggy.py --command='{python} {root_dir}/{comfy_ui}/main.py {args}' --port=8188")
+    shell_command(f"{python} {pingy_script} --command='{python} {root_dir}/{comfy_ui}/main.py {args}' --port=8188")
