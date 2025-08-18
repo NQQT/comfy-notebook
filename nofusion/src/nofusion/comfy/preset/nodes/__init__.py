@@ -5,8 +5,7 @@ from ....config import variables
 from ....shell import shell_command
 
 
-def nodes_symbolic_import():
-    package_dir = os.path.dirname(__file__)
+def nodes_symbolic_import(package_dir=os.path.dirname(__file__)):
     # Getting the list of nodes within the folder
     node_list = [f for f in os.listdir(package_dir) if os.path.isdir(os.path.join(package_dir, f))]
 
