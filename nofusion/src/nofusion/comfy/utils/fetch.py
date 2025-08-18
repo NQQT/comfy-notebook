@@ -9,12 +9,24 @@ from ...shell import shell_command
 
 
 # Design to fetch an asset into comfyUI
-def fetch_asset(value):
-    # Normalising Data
-    data = type_switch(value, {
-        "str": lambda string: {
+def fetch_asset(value: dict):
+    return
 
-        }
+
+# For fetching lora assets
+def fetch_asset_loras(name: str, location: str):
+    fetch_asset({
+        "type": "loras",
+        "name": name,
+        "location": location,
+    })
+
+
+def fetch_asset_checkpoints(name: str, location: str):
+    fetch_asset({
+        "type": "checkpoints",
+        "name": name,
+        "location": location,
     })
 
 
