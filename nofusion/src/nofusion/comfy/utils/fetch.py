@@ -42,7 +42,7 @@ def fetch_custom_node(value):
     shell_command(f"git clone {data.get('git')}")
 
     # Go into the folder
-    os.chdir(f"cd {location_custom_nodes()}/{folder_name}")
+    os.chdir(f"{location_custom_nodes()}/{folder_name}")
 
     # Do we need checkout to a specific version?
     commit = data.get("commit")
