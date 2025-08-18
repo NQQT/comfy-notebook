@@ -10,7 +10,7 @@ from ..shell import shell_command
 
 
 # For installing comfy UI
-def install_comfy_ui(checkout_version="37d620a6b85f61b824363ed8170db373726ca45a"):
+def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"):
     # Configuring Variables
     configure_variables()
 
