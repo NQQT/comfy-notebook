@@ -6,6 +6,7 @@ from .location import location_ipadaptor, location_checkpoints, location_diffusi
     location_clip_vision, location_text_encoders, location_vae, location_unet
 from .utils import fetch_custom_node
 from ..config import variables
+from ..install import install_package
 from ..shell import shell_command
 
 
@@ -71,5 +72,24 @@ def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"
     fetch_custom_node("https://github.com/Comfy-Org/ComfyUI-Manager")
 
     # Additional installation to use
-    # !{pip} install pillow==10.2.0 insightface onnxruntime onnxruntime-gpu
-    # !{pip} install matplotlib-inline
+    install_package(
+        "pillow==10.2.0",
+        "insightface",
+        "onnxruntime",
+        "onnxruntime-gpu",
+        "matplotlib-inline"
+    )
+
+    # For installing custom nodes
+    fetch_custom_node("https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite")
+    fetch_custom_node("https://github.com/kijai/ComfyUI-KJNodes")
+    # git_custom_node("https://github.com/yolain/ComfyUI-Easy-Use","717092a3ceb51c474b5b3f77fc188979f0db9d67")
+    fetch_custom_node("https://github.com/rgthree/rgthree-comfy")
+    # for loading GGUF model
+    fetch_custom_node("https://github.com/city96/ComfyUI-GGUF")
+    # for multi GPU
+    fetch_custom_node("https://github.com/pollockjj/ComfyUI-MultiGPU")
+
+    # for interpolation
+    # git_custom_node("https://github.com/Fannovel16/ComfyUI-Frame-Interpolation")
+    fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
