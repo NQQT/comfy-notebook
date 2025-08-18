@@ -14,8 +14,8 @@ def fetch_asset(value: dict):
     asset_type = value.get('type')
     asset_name = value.get('name')
     asset_url = value.get('location')
-    root_dir = variables.get('root')
-    comfy_dir = variables.get('name.comfy')
+    root_dir = variables('root')
+    comfy_dir = variables('name.comfy')
 
     # Go to the correct folder
     os.chdir(f"{root_dir}/{comfy_dir}/models/{asset_type}")
