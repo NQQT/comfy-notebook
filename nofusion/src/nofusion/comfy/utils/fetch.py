@@ -10,6 +10,26 @@ from ...shell import shell_command
 
 # Design to fetch an asset into comfyUI
 def fetch_asset(value: dict):
+    # Getting te asset type
+    asset_type = value.get('type')
+    asset_name = value.get('name')
+    asset_url = value.get('location')
+    root_dir = variables.get('root')
+    comfy_dir = variables.get('name.comfy')
+
+    # Go to the correct folder
+    os.chdir(f"{root_dir}/{comfy_dir}/models/{asset_type}")
+
+    # Setting the asset name as required
+    if not asset_name is None:
+        # Set it to asset name
+        file_name = asset_name
+    else:
+        file_name = string_extract_filename(asset_url)
+
+    # for loading files
+    if not os.path.exists(file_name):
+        shell_command(f'wget -O "{file_name}" "{asset_url}"')
     return
 
 
