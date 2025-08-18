@@ -34,7 +34,7 @@ def fetch_asset(value: dict):
 
 
 # For fetching lora assets
-def fetch_asset_loras(name: str, location: str):
+def fetch_asset_loras(location: str, name: str = None):
     fetch_asset({
         "type": "loras",
         "name": name,
@@ -42,7 +42,8 @@ def fetch_asset_loras(name: str, location: str):
     })
 
 
-def fetch_asset_checkpoints(name: str, location: str):
+# Name are not defined by default, to get the default name.
+def fetch_asset_checkpoints(location: str, name: str = None):
     fetch_asset({
         "type": "checkpoints",
         "name": name,
