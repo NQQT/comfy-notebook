@@ -4,6 +4,7 @@ from noobish.core import path_remove, path_symbolic_create
 from .config import configure_variables
 from .location import location_ipadaptor, location_checkpoints, location_diffusion_models, location_clip, \
     location_clip_vision, location_text_encoders, location_vae, location_unet
+from .preset.nodes import nodes_symbolic_import
 from .utils import fetch_custom_node
 from ..config import variables
 from ..install import install_package
@@ -89,7 +90,9 @@ def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"
     fetch_custom_node("https://github.com/city96/ComfyUI-GGUF")
     # for multi GPU
     fetch_custom_node("https://github.com/pollockjj/ComfyUI-MultiGPU")
-
     # for interpolation
     # git_custom_node("https://github.com/Fannovel16/ComfyUI-Frame-Interpolation")
     fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
+
+    # Installing custom nodes
+    nodes_symbolic_import()

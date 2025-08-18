@@ -25,6 +25,7 @@ def fetch_asset(value: dict):
         # Set it to asset name
         file_name = asset_name
     else:
+        # This is basic name extraction
         file_name = string_extract_filename(asset_url)
 
     # for loading files
