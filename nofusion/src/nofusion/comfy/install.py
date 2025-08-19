@@ -63,7 +63,7 @@ def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"
     path_symbolic_create("/tmp/models/checkpoints", location_checkpoints())
     path_symbolic_create("/tmp/models/diffusion_models", location_diffusion_models())
     path_symbolic_create("/tmp/models/clip", location_clip())
-    path_symbolic_create("/tmp/models/clip_vision", location_clip())
+    path_symbolic_create("/tmp/models/clip_vision", location_clip_vision())
     path_symbolic_create("/tmp/models/ipadapter", location_ipadaptor())
     path_symbolic_create("/tmp/models/text_encoders", location_text_encoders())
     path_symbolic_create("/tmp/models/vae", location_vae())
