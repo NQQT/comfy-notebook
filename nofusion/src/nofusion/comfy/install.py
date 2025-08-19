@@ -95,4 +95,4 @@ def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"
     fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
 
     # Installing custom nodes
-    nodes_symbolic_import(f"{root_dir}/comfy-notebook/nodes")
+    nodes_symbolic_import(f"{root_dir}/comfy-notebook/notebook/nodes")
