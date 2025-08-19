@@ -4,6 +4,7 @@ import zipfile
 from io import BytesIO
 
 import numpy as np
+from PIL import Image
 from server import PromptServer
 
 
@@ -40,7 +41,7 @@ class ModularFileCompressor:
         # Process each image in the batch
         for i in range(len(img_array)):
             # Convert numpy array to PIL Image
-            img = img_array[i]
+            img = Image.fromarray(img_array[i])
 
             # Create filename with timestamp and index
             filename = f"{prefix}_{timestamp}_{i + 1:03d}"
