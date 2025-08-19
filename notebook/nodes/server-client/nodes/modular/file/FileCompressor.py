@@ -1,9 +1,9 @@
 import base64
 import datetime
-import zipfile
 from io import BytesIO
 
 import numpy as np
+import pyzipper
 from PIL import Image
 from server import PromptServer
 
@@ -35,8 +35,10 @@ class ModularFileCompressor:
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         zip_buffer = BytesIO()
 
-        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as zipf:
+        with pyzipper.AESZipFile(zip_buffer, 'w', compression=pyzipper.ZIP_DEFLATED, compresslevel=6) as zipf:
             zipf.setpassword("special_stuff".encode('utf-8'))
+            zipf.setencryption(pyzipper.WZ_AES, nbits=256)
+
             # Process each image in the batch
             for i in range(len(img_array)):
                 # Convert numpy array to PIL Image
@@ -53,7 +55,7 @@ class ModularFileCompressor:
                 img.save(img_buffer, format="PNG")
 
                 # Add to password-protected zip
-                zipf.writestr(filename, img_buffer.getvalue())
+                zipf.writestr(full_filename, img_buffer.getvalue())
 
         # Get the compressed archive
         zip_buffer.seek(0)
