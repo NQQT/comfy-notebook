@@ -46,15 +46,21 @@ def print_url():
 
 
 def find_and_terminate_process(port):
-    for process in psutil.process_iter(['pid', 'name', 'connections']):
-        for conn in process.info.get('connections', []):
-            if conn.laddr.port == port:
-                print(f"Port {port} is in use by process {process.info['name']} (PID {process.info['pid']})")
-                try:
-                    process.terminate()
-                    print(f"Terminated process with PID {process.info['pid']}")
-                except psutil.NoSuchProcess:
-                    print(f"Process with PID {process.info['pid']} not found")
+    for process in psutil.process_iter(['pid', 'name']):
+        try:
+            connections = process.connections()
+            for conn in connections:
+                if conn.laddr.port == port:
+                    print(f"Port {port} is in use by process {process.info['name']} (PID {process.info['pid']})")
+                    try:
+                        process.terminate()
+                        print(f"Terminated process with PID {process.info['pid']}")
+                        return
+                    except psutil.NoSuchProcess:
+                        print(f"Process with PID {process.info['pid']} not found")
+        except (psutil.AccessDenied, psutil.NoSuchProcess):
+            # Skip processes we can't access
+            continue
 
 
 def main():
