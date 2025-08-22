@@ -90,6 +90,7 @@ def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"
     fetch_custom_node("https://github.com/city96/ComfyUI-GGUF")
     # for multi GPU
     fetch_custom_node("https://github.com/pollockjj/ComfyUI-MultiGPU")
+    fetch_custom_node("https://github.com/skyiron/ComfyUI-DistributedGPU")
     # for interpolation
     # git_custom_node("https://github.com/Fannovel16/ComfyUI-Frame-Interpolation")
     fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
