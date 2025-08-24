@@ -52,6 +52,14 @@ def fetch_asset_checkpoints(location: str, name: str = None):
     })
 
 
+def fetch_asset_diffusion_models(location: str, name: str = None):
+    fetch_asset({
+        "type": "diffusion_models",
+        "name": name,
+        "location": location,
+    })
+
+
 # Name are not defined by default,
 def fetch_asset_vae(location: str, name: str = None):
     fetch_asset({
