@@ -1,10 +1,7 @@
 import os
 
-from noobish.core import path_remove, path_symbolic_create
 from .config import configure_variables
-from .location import location_ipadaptor, location_checkpoints, location_diffusion_models, location_clip, \
-    location_clip_vision, location_text_encoders, location_vae, location_unet
-from .preset.nodes import nodes_symbolic_import
+from .location import location_ipadaptor
 from .utils import fetch_custom_node
 from ..config import variables
 from ..install import install_package
@@ -35,39 +32,9 @@ def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"
 
     # Creating Temporary Folder
     shell_command(
-        "mkdir /tmp/models",
-        "mkdir /tmp/models/checkpoints",
-        "mkdir /tmp/models/diffusion_models",
-        "mkdir /tmp/models/clip",
-        "mkdir /tmp/models/clip_vision",
-        "mkdir /tmp/models/ipadapter",
-        "mkdir /tmp/models/text_encoders",
-        "mkdir /tmp/models/vae",
-        "mkdir /tmp/models/unet",
         # Require the ip-adapter Folder
-        f"mkdir {location_ipadaptor()}",
+        f"mkdir {location_ipadaptor()}"
     )
-
-    # Remove all these paths
-    path_remove(
-        location_checkpoints(),
-        location_diffusion_models(),
-        location_clip(),
-        location_clip_vision(),
-        location_ipadaptor(),
-        location_text_encoders(),
-        location_vae(),
-        location_unet()
-    )
-
-    path_symbolic_create("/tmp/models/checkpoints", location_checkpoints())
-    path_symbolic_create("/tmp/models/diffusion_models", location_diffusion_models())
-    path_symbolic_create("/tmp/models/clip", location_clip())
-    path_symbolic_create("/tmp/models/clip_vision", location_clip_vision())
-    path_symbolic_create("/tmp/models/ipadapter", location_ipadaptor())
-    path_symbolic_create("/tmp/models/text_encoders", location_text_encoders())
-    path_symbolic_create("/tmp/models/vae", location_vae())
-    path_symbolic_create("/tmp/models/unet", location_unet())
 
     # Download Comfy UI Manager
     fetch_custom_node("https://github.com/Comfy-Org/ComfyUI-Manager")
@@ -95,5 +62,5 @@ def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"
     # git_custom_node("https://github.com/Fannovel16/ComfyUI-Frame-Interpolation")
     fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
 
-    # Installing custom nodes
-    nodes_symbolic_import(f"{root_dir}/comfy-notebook/notebook/nodes")
+    # For running Cloud Based ComfyUI with Local Controls
+    fetch_custom_node("https://github.com/comfyscript/ComfyUI-CloudClient")

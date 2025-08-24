@@ -2,6 +2,7 @@
 from ...source import civitai_fetch_checkpoints, civitai_fetch_loras
 
 
+# For setting up CyberRealisticPony
 def setup_cyber_realistic():
     civitai_fetch_checkpoints("CyberRealisticPony", "2071650")
 

@@ -52,6 +52,24 @@ def fetch_asset_checkpoints(location: str, name: str = None):
     })
 
 
+# Name are not defined by default,
+def fetch_asset_vae(location: str, name: str = None):
+    fetch_asset({
+        "type": "vae",
+        "name": name,
+        "location": location,
+    })
+
+
+# Name are not defined by default,
+def fetch_asset_text_encoders(location: str, name: str = None):
+    fetch_asset({
+        "type": "text_encoders",
+        "name": name,
+        "location": location,
+    })
+
+
 # Design for Fetching a Custom Node
 def fetch_custom_node(value):
     # Need to work out what the value actually is first

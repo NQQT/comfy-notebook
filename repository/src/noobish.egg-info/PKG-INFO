@@ -8,7 +8,7 @@ Project-URL: Homepage, https://github.com/nqqt/noobish
 Project-URL: Issues, https://github.com/nqqt/noobish/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: Operating System :: OS Independent
-Requires-Python: >=3.9
+Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 
 # Example Package
