@@ -53,6 +53,8 @@ def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"
     fetch_custom_node("https://github.com/kijai/ComfyUI-KJNodes")
     # git_custom_node("https://github.com/yolain/ComfyUI-Easy-Use","717092a3ceb51c474b5b3f77fc188979f0db9d67")
     fetch_custom_node("https://github.com/rgthree/rgthree-comfy")
+    # RES_2S Sampler (better and sharper)
+    fetch_custom_node("https://github.com/ClownsharkBatwing/RES4LYF")
     # for loading GGUF model
     fetch_custom_node("https://github.com/city96/ComfyUI-GGUF")
     # for multi GPU
