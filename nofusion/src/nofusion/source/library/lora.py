@@ -23,7 +23,7 @@ def source_wan_i2v_nsfw_loras():
     civitai_fetch_loras("GeneralNSFW_i2v_LowNoise", "2083303")
 
     # Oral Insertion
-    civitai_fetch_loras("OralInsertion_i2v", "2121297")
+    # civitai_fetch_loras("OralInsertion_i2v", "2121297")
 
     # Anime cumshot Aesthetics
     civitai_fetch_loras("AnimeCumshotAesthetics_i2v_HighNoise", "2116008")
