@@ -22,6 +22,14 @@ def source_wan_i2v_nsfw_loras():
     civitai_fetch_loras("GeneralNSFW_i2v_HighNoise", "2073605")
     civitai_fetch_loras("GeneralNSFW_i2v_LowNoise", "2083303")
 
+    # Facial Cumshot
+    civitai_fetch_loras("FacialShot_i2v_HighNoise", "2103700")
+    civitai_fetch_loras("FacialShot_i2v_LowNoise", "2103699")
+
+    # Deep Throat
+    civitai_fetch_loras("DeepThroat_i2v_HighNoise", "2122049")
+    civitai_fetch_loras("DeepThroat_i2v_LowNoise", "2124073")
+
     # Oral Insertion
     # civitai_fetch_loras("OralInsertion_i2v", "2121297")
 
