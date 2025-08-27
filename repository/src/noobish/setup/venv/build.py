@@ -1,11 +1,12 @@
 # This is to set up virtual environment for python3 on Kaggle (to save on import later)
 
 import os
-import sys
 import stat
+import sys
+
 
 # For installing virtualenv
-def setup_virtualenv(root_dir = os.getcwd(), python = sys.executable):
+def setup_virtualenv(root_dir=os.getcwd(), python=sys.executable):
     try:
         ipython = get_ipython()
     except NameError:
@@ -16,7 +17,7 @@ def setup_virtualenv(root_dir = os.getcwd(), python = sys.executable):
         return None
 
     # First, install virtualenv
-    get_ipython().system(f"{python} -m pip install virtualenv")
+    os.system(f"{python} -m pip install virtualenv")
 
     def find_bin_folders(folder_path):
         bin_folders = []
@@ -49,15 +50,15 @@ def setup_virtualenv(root_dir = os.getcwd(), python = sys.executable):
     else:
         bin_folders = find_bin_folders(f'{root_dir}/venv')
         if bin_folders:
-          print("Found 'bin' folders:")
-          for bin_folder in bin_folders:
-            print(bin_folder)
-            for filename in os.listdir(bin_folder):
-                file_path = os.path.join(bin_folder, filename)
-                if os.path.isfile(file_path):
-                    current_permissions = os.stat(file_path).st_mode
-                     # Add execute permissions for the user, group, and others
-                    os.chmod(file_path, current_permissions | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+            print("Found 'bin' folders:")
+            for bin_folder in bin_folders:
+                print(bin_folder)
+                for filename in os.listdir(bin_folder):
+                    file_path = os.path.join(bin_folder, filename)
+                    if os.path.isfile(file_path):
+                        current_permissions = os.stat(file_path).st_mode
+                        # Add execute permissions for the user, group, and others
+                        os.chmod(file_path, current_permissions | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
     # Return the location of python3
     return f'{root_dir}/venv/bin/python3'
