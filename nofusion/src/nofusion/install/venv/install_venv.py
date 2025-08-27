@@ -16,7 +16,7 @@ def install_libraries(pip):
     # Executing Shell Command
     shell_command(
         f"cd {variables('root')}",
-        f"{pip} install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121",
+        f"{pip} install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128",
         f"{pip} install tensorflow[and-cuda]",
         f"{pip} install -r {minimum_requirement}"
     )
