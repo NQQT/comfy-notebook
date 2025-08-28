@@ -38,6 +38,10 @@ def source_wan_i2v_nsfw_loras():
     civitai_fetch_loras("AssertiveCowgirl_i2v_HighNoise", "2129122")
     civitai_fetch_loras("AssertiveCowgirl_i2v_LowNoise", "2129201")
 
+    # Doggy Style
+    civitai_fetch_loras("DoggyStype_t2v_HighNoise", "2076026")
+    civitai_fetch_loras("DoggyStyle_t2v_LowNoise", "2076035")
+
     # Oral Insertion
     # civitai_fetch_loras("OralInsertion_i2v", "2121297")
 
