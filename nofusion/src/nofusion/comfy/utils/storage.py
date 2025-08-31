@@ -1,7 +1,7 @@
 from noobish.core import path_remove, path_symbolic_create
 
 from ..location import location_ipadaptor, location_checkpoints, location_diffusion_models, location_clip, \
-    location_clip_vision, location_text_encoders, location_vae, location_unet
+    location_clip_vision, location_text_encoders, location_vae, location_unet, location_models
 from ...shell import shell_command
 
 
