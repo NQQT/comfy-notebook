@@ -1,12 +1,34 @@
 from noobish.core import path_remove, path_symbolic_create
+
 from ..location import location_ipadaptor, location_checkpoints, location_diffusion_models, location_clip, \
     location_clip_vision, location_text_encoders, location_vae, location_unet
 from ...shell import shell_command
 
 
+def storage_temporary():
+    temporary_location = "/tmp/models"
+    # Creating Temporary Folders
+    shell_command(
+        f"mkdir {temporary_location}",
+        f"mkdir  {temporary_location}/checkpoints",
+        f"mkdir  {temporary_location}/diffusion_models",
+        f"mkdir  {temporary_location}/clip",
+        f"mkdir  {temporary_location}/clip_vision",
+        f"mkdir  {temporary_location}/ipadapter",
+        f"mkdir  {temporary_location}/text_encoders",
+        f"mkdir  {temporary_location}/vae",
+        f"mkdir  {temporary_location}/unet"
+    )
+
+    # Removing the Model Directory
+    path_remove(location_models())
+    # Creating Linkage
+    path_symbolic_create(temporary_location, location_models())
+
+
 # This is design to create temporary storage
 # Some cloud has no persistence storage, or it is expensive
-def storage_temporary():
+def storage_temporary_old():
     # Creating Temporary Folders
     shell_command(
         "mkdir /tmp/models",
