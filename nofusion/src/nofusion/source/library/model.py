@@ -10,12 +10,12 @@ def source_model_wan_i2v_all_in_one():
 
 # For installing wan image to video
 # This is wan2.2
-def source_model_wan_i2v(switch=None):
+def source_model_wan_i2v(model_size="14B_Q8_0"):
     location_source = "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main"
 
     # Start Downloading
-    fetch_asset_diffusion_models(f"{location_source}/wan2.2_i2v_high_noise_14B_Q8_0.gguf")
-    fetch_asset_diffusion_models(f"{location_source}/wan2.2_i2v_low_noise_14B_Q8_0.gguf")
+    fetch_asset_diffusion_models(f"{location_source}/wan2.2_i2v_high_noise_{model_size}.gguf")
+    fetch_asset_diffusion_models(f"{location_source}/wan2.2_i2v_low_noise_{model_size}.gguf")
 
     # Required Text Encoder
     fetch_asset_text_encoders(
