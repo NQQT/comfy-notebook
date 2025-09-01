@@ -11,6 +11,7 @@ def storage_temporary():
     shell_command(
         f"mkdir {temporary_location}",
         f"mkdir  {temporary_location}/checkpoints",
+        f"mkdir  {temporary_location}/loras",
         f"mkdir  {temporary_location}/diffusion_models",
         f"mkdir  {temporary_location}/clip",
         f"mkdir  {temporary_location}/clip_vision",
