@@ -2,6 +2,7 @@
 import os
 
 from noobish.core import type_switch
+
 from ..location import location_custom_nodes
 from ...common import string_extract_filename
 from ...config import variables
@@ -30,7 +31,7 @@ def fetch_asset(value: dict):
 
     # for loading files
     if not os.path.exists(file_name):
-        shell_command(f'wget -O "{file_name}" "{asset_url}"')
+        shell_command(f'wget --progress=bar:force -O "{file_name}" "{asset_url}"')
     return
 
 
