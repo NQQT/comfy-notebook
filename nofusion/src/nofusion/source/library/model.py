@@ -2,7 +2,7 @@
 from ...comfy import fetch_asset_diffusion_models, fetch_asset_text_encoders, fetch_asset_vae
 
 
-def source_model_wan_i2v_complete():
+def source_model_wan_i2v_all_in_one():
     # Fetching Checkpoints
     fetch_asset_checkpoints(
         "https://huggingface.co/Phr00t/WAN2.2-14B-Rapid-AllInOne/resolve/main/v9/wan2.2-i2v-rapid-aio-nsfw-v9.2.safetensors")

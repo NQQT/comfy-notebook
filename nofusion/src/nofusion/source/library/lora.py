@@ -23,8 +23,8 @@ def source_wan_i2v_nsfw_loras():
     civitai_fetch_loras("GeneralNSFW_i2v_LowNoise", "2083303")
 
     # Facial Cumshot
-    civitai_fetch_loras("FacialShot_i2v_HighNoise", "2103700")
-    civitai_fetch_loras("FacialShot_i2v_LowNoise", "2103699")
+    # civitai_fetch_loras("FacialShot_i2v_HighNoise", "2103700")
+    # civitai_fetch_loras("FacialShot_i2v_LowNoise", "2103699")
 
     # Deep Throat
     civitai_fetch_loras("DeepThroat_i2v_HighNoise", "2122049")
@@ -39,7 +39,7 @@ def source_wan_i2v_nsfw_loras():
     civitai_fetch_loras("AssertiveCowgirl_i2v_LowNoise", "2129201")
 
     # Doggy Style
-    civitai_fetch_loras("DoggyStype_t2v_HighNoise", "2076026")
+    civitai_fetch_loras("DoggyStyle_t2v_HighNoise", "2076026")
     civitai_fetch_loras("DoggyStyle_t2v_LowNoise", "2076035")
 
     # Oral Insertion
