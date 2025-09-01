@@ -13,10 +13,13 @@ def install_libraries(pip):
     # Setting up the minimum requirements
     minimum_requirement = os.path.join(package_dir, 'requirement', "minimum.txt")
 
+    # Getting the Cuda Version
+    cuda_version = variables("cuda")
+
     # Executing Shell Command
     shell_command(
         f"cd {variables('root')}",
-        f"{pip} install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128",
+        f"{pip} install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu{cuda_version}",
         f"{pip} install tensorflow[and-cuda]",
         f"{pip} install -r {minimum_requirement}"
     )
