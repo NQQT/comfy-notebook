@@ -2,7 +2,6 @@
 import os
 
 from noobish.core import type_switch
-
 from ..location import location_custom_nodes
 from ...common import string_extract_filename
 from ...config import variables
@@ -17,9 +16,11 @@ def fetch_asset(value: dict):
     asset_url = value.get('location')
     root_dir = variables('root')
     comfy_dir = variables('name.comfy')
-
+    models_dir = variables('dir.models')
+    asset_dir = f"{models_dir}/{asset_type}"
     # Go to the correct folder
-    os.chdir(f"{root_dir}/{comfy_dir}/models/{asset_type}")
+    os.makedirs(asset_dir, exist_ok=True)
+    os.chdir(asset_dir)
 
     # Setting the asset name as required
     if not asset_name is None:
