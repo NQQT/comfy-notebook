@@ -1,5 +1,5 @@
 # For Setting up Cyber Realistic
-from os import mkdir
+import os
 
 from ...config import variables
 from ...shell import shell_command
@@ -7,13 +7,16 @@ from ...shell import shell_command
 
 # For setting up modal volume
 def setup_modal_volume(volume_name: str):
-    # Creating a Volume
-    shell_command(f"modal volume create {volume_name}")
+    # Checking volume already exists
+    volume_path = f"/mnt/{volume_name}"
+    if not os.path.exists(volume_path):
+        # Creating a Volume
+        shell_command(f"modal volume create {volume_name}")
 
     # Reconfiguring Variables
     variables({
         # Updating Root Path
-        "root": f"/mnt/{volume_name}"
+        "root": volume_path
     })
 
 
@@ -24,7 +27,7 @@ def setup_modal_volume_assets(volume_name: str):
     dir_models = f"/mnt/{volume_name}/models"
 
     # Making the Model Directory
-    mkdir(dir_models)
+    os.mkdir(dir_models)
 
     # Updating Variables
     variables({
