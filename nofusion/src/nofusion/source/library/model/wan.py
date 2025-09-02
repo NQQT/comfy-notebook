@@ -1,5 +1,5 @@
 # For Installing Models
-from ...comfy import fetch_asset_diffusion_models, fetch_asset_text_encoders, fetch_asset_vae, fetch_asset_checkpoints
+from ....comfy import fetch_asset_diffusion_models, fetch_asset_text_encoders, fetch_asset_vae, fetch_asset_checkpoints
 
 
 def source_model_wan_i2v_all_in_one():

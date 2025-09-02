@@ -1,5 +1,5 @@
-from ..civitai import civitai_fetch_loras
-from ...comfy import fetch_asset_loras
+from ...civitai import civitai_fetch_loras
+from ....comfy import fetch_asset_loras
 
 
 # For Installing Loras From Sources

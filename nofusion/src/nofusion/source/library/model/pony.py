@@ -1,9 +1,8 @@
 # For Setting up Cyber Realistic
-from ...source import civitai_fetch_checkpoints, civitai_fetch_loras
+from ....source import civitai_fetch_checkpoints, civitai_fetch_loras
 
 
-# For setting up CyberRealisticPony
-def setup_cyber_realistic():
+def source_model_pony_cyber_realistic():
     civitai_fetch_checkpoints("CyberRealisticPony", "2071650")
 
     # civitai_checkpoint_fetch("StableIllustrious","2091367")

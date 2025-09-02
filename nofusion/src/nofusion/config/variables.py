@@ -13,5 +13,9 @@ variables = data_storage({
     # Initial Data Configuration
     "name": {
         "comfy": "ComfyUI",
+    },
+    # Storing Secrets
+    "secret": {
+        # Update your Key Listing Here
     }
 })

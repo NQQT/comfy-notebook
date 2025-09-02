@@ -1,1 +1,1 @@
-from .stable_diffusion import *
+from .modal import *

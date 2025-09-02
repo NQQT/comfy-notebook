@@ -11,8 +11,11 @@ def configure_variables():
 
     # Updating all the directory path
     variables({
+        # Directory Listing
         "dir": {
             "comfy": working_dir,
+            # Location of the model
+            "models": f"{working_dir}/models",
             # These are all comfy directory
             "custom_nodes": f"{working_dir}/custom_nodes",
         }

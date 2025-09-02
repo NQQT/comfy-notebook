@@ -9,7 +9,7 @@ from ..shell import shell_command
 
 
 # For installing comfy UI
-def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"):
+def install_comfy_ui(checkout_version="e2d1e5dad98dbbcf505703ea8663f20101e6570a"):
     # Configuring Variables
     configure_variables()
 
@@ -61,8 +61,6 @@ def install_comfy_ui(checkout_version="da2efeaec6609265051165bfb413a2a4c84cf4bb"
     fetch_custom_node("https://github.com/pollockjj/ComfyUI-MultiGPU")
     fetch_custom_node("https://github.com/skyiron/ComfyUI-DistributedGPU")
     # for interpolation
-    # git_custom_node("https://github.com/Fannovel16/ComfyUI-Frame-Interpolation")
     fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
-
     # For running Cloud Based ComfyUI with Local Controls
     fetch_custom_node("https://github.com/comfyscript/ComfyUI-CloudClient")
