@@ -64,3 +64,5 @@ def install_comfy_ui(checkout_version="e2d1e5dad98dbbcf505703ea8663f20101e6570a"
     fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
     # For running Cloud Based ComfyUI with Local Controls
     fetch_custom_node("https://github.com/comfyscript/ComfyUI-CloudClient")
+    # For Upscaling and so on
+    fetch_custom_node("https://github.com/kijai/ComfyUI-SUPIR")
