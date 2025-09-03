@@ -1,5 +1,6 @@
 # For generating a model link to download
 from noobish.core import string_switch
+
 from ..comfy import fetch_asset_checkpoints, fetch_asset_loras
 from ..config import variables
 
@@ -16,7 +17,9 @@ def civitai_fetch_url(model_id, model_format="SafeTensor"):
 def civitai_fetch_loras(model_name: str, model_id: str, ext="safetensors"):
     # This is for zip file
     def download_and_extract():
-        file_downloaded = standard_loras()
+        # Constructing the Lora URL. Diffusers is for zip
+        model_url = civitai_fetch_url(model_id, "Diffusers")
+        file_downloaded = fetch_asset_loras(model_url, model_name + "." + ext)
         # Attempting to unpack
         import zipfile, os
         with zipfile.ZipFile(file_downloaded, "r") as zip_ref:
