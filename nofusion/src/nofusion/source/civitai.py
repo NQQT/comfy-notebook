@@ -38,7 +38,7 @@ def civitai_fetch_loras(model_name: str, model_id: str, ext="safetensors"):
 
     string_switch(ext, {
         # If it is zip files. Download it and start extraction
-        "zip": download_and_extract,
+        "diffusers": download_and_extract,
         "default": standard_loras
     })
 
