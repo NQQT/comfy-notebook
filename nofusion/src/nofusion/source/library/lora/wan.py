@@ -46,7 +46,7 @@ def source_wan_i2v_nsfw_loras():
     civitai_fetch_loras("AssertiveCowgirl_i2v_LowNoise", "2129201")
 
     # https://civitai.com/models/1874153?modelVersionId=2121297
-    civitai_fetch_loras("Oral_i2v", "2121297", "zip")
+    civitai_fetch_loras("OInsertion_i2v", "2121297", "zip")
 
     # https://civitai.com/models/1923528/sex-fov-slider-wan-22
     civitai_fetch_loras("NSFWFOVSlider_i2v", "2177091", "zip")
