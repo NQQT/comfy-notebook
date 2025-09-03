@@ -33,12 +33,14 @@ def fetch_asset(value: dict):
     # for loading files
     if not os.path.exists(file_name):
         shell_command(f'wget --progress=bar:force -O "{file_name}" "{asset_url}"')
-    return
+
+    # Return the path where the file are stored
+    return f"{asset_dir}/{asset_dir}/{file_name}"
 
 
 # For fetching lora assets
 def fetch_asset_loras(location: str, name: str = None):
-    fetch_asset({
+    return fetch_asset({
         "type": "loras",
         "name": name,
         "location": location,
@@ -47,7 +49,7 @@ def fetch_asset_loras(location: str, name: str = None):
 
 # Name are not defined by default, to get the default name.
 def fetch_asset_checkpoints(location: str, name: str = None):
-    fetch_asset({
+    return fetch_asset({
         "type": "checkpoints",
         "name": name,
         "location": location,
