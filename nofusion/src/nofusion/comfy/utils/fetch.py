@@ -2,6 +2,7 @@
 import os
 
 from noobish.core import type_switch
+
 from ..location import location_custom_nodes
 from ...common import string_extract_filename
 from ...config import variables
@@ -35,7 +36,7 @@ def fetch_asset(value: dict):
         shell_command(f'wget --progress=bar:force -O "{file_name}" "{asset_url}"')
 
     # Return the path where the file are stored
-    return f"{asset_dir}/{asset_dir}/{file_name}"
+    return f"{asset_dir}/{file_name}"
 
 
 # For fetching lora assets
