@@ -37,6 +37,11 @@ def source_wan_i2v_nsfw_loras():
     civitai_fetch_loras("DeepThroat_i2v_HighNoise", "2122049")
     civitai_fetch_loras("DeepThroat_i2v_LowNoise", "2124073")
 
+    # Blowjob
+    # https://civitai.com/models/1497390/deepthroat-blowjob-wan-2x-i2v
+    civitai_fetch_loras("Blowjob_i2v_HighNoise", "2152516")
+    civitai_fetch_loras("Blowjob_i2v_LowNoise", "2152583")
+
     # Missionary
     civitai_fetch_loras("Missionary_i2v_HighNoise", "2098405")
     civitai_fetch_loras("Missionary_i2v_LowNoise", "2098396")
@@ -47,7 +52,8 @@ def source_wan_i2v_nsfw_loras():
 
     # https://civitai.com/models/1874153?modelVersionId=2121297
     civitai_fetch_loras("OInsertion_i2v", "2121297", "diffusers")
-
+    # https://civitai.com/models/1905168/cumshot-wan-22
+    civitai_fetch_loras("Cumshot_i2v", "2156421", "diffusers")
     # https://civitai.com/models/1923528/sex-fov-slider-wan-22
     civitai_fetch_loras("NSFWFOVSlider_i2v", "2177091", "diffusers")
 
