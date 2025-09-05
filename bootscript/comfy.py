@@ -7,7 +7,11 @@ from nofusion.source import source_model_pony_cyber_realistic, source_model_wan_
 
 variables({
     # Setting OS
-    "root": os.getcwd()
+    "root": os.getcwd(),
+    # Keys to be used for downloading
+    "secret": {
+        "civitai": "813701a486b32b80542dd5606dd8efdf"
+    }
 })
 
 # Installing ComfyUI and all dependencies
