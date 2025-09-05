@@ -1,13 +1,10 @@
-import os
+from nofusion.comfy import install_comfy_ui
+from nofusion.config import variables
 
-# Setting up ComfyUI on a brand-new server
-# Returning to Working Directory
-git_repo_name = "comfy-notebook"
+variables({
+    # Require to define the correct root for kaggle
+    "root": "/root"
+})
 
-# Remove the repo
-os.system(f"rm -rf {git_repo_name}")
-# Running Comfy Setup
-os.system(f"git clone --branch feature/venv-upgrade https://github.com/NQQT/{git_repo_name}.git")
-
-os.system(f"pip install --break-system-packages --upgrade {git_repo_name}/repository")
-os.system(f"pip install --break-system-packages --upgrade {git_repo_name}/nofusion")
+# Installing ComfyUI
+install_comfy_ui()
