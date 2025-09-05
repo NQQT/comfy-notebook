@@ -36,9 +36,6 @@ def install_comfy_ui(checkout_version="e2d1e5dad98dbbcf505703ea8663f20101e6570a"
         f"mkdir {location_ipadaptor()}"
     )
 
-    # Download Comfy UI Manager
-    fetch_custom_node("https://github.com/Comfy-Org/ComfyUI-Manager")
-
     # Additional installation to use
     install_package(
         "pillow==10.2.0",
@@ -49,6 +46,8 @@ def install_comfy_ui(checkout_version="e2d1e5dad98dbbcf505703ea8663f20101e6570a"
     )
 
     # For installing custom nodes
+    # Download Comfy UI Manager
+    fetch_custom_node("https://github.com/Comfy-Org/ComfyUI-Manager")
     fetch_custom_node("https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite")
     fetch_custom_node("https://github.com/kijai/ComfyUI-KJNodes")
     # git_custom_node("https://github.com/yolain/ComfyUI-Easy-Use","717092a3ceb51c474b5b3f77fc188979f0db9d67")
