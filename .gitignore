@@ -1,3 +1,5 @@
 .venv/
 .idea/
 kaggle.ipynb
+playground
+*.egg-info/

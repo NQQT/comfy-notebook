@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "noobish"
+version = "0.0.1"
+authors = [
+  { name="Example Author", email="author@example.com" },
+]
+
+description = "A small example package"
+readme = "readme.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+
+[project.urls]
+Homepage = "https://github.com/nqqt/noobish"
+Issues = "https://github.com/nqqt/noobish/issues"
