@@ -7,10 +7,15 @@ def source_wan_i2v_lightning_loras():
     # The Location
     lora_location = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan22-Lightning"
     # Lightning Loras
-    fetch_asset_loras(
-        f"{lora_location}/Wan2.2-Lightning_I2V-A14B-4steps-lora_HIGH_fp16.safetensors")
-    fetch_asset_loras(
-        f"{lora_location}/Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors")
+    fetch_asset_loras(f"{lora_location}/Wan2.2-Lightning_I2V-A14B-4steps-lora_HIGH_fp16.safetensors")
+    fetch_asset_loras(f"{lora_location}/Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors")
+
+
+def source_wan_t2v_lightning_loras():
+    # The location
+    lora_location = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan22-Lightning"
+    fetch_asset_loras(f"{lora_location}/Wan2.2-Lightning_T2V-v1.1-A14B-4steps-lora_HIGH_fp16.safetensors")
+    fetch_asset_loras(f"{lora_location}/Wan2.2-Lightning_T2V-v1.1-A14B-4steps-lora_LOW_fp16.safetensors")
 
 
 def source_wan_t2v_nsfw_loras():
