@@ -15,13 +15,22 @@ def source_wan_i2v_lightning_loras():
 
 def source_wan_t2v_nsfw_loras():
     # Doggy Style
+    # https://civitai.com/models/1741501/doggy-style-sex-official-wan-22-release
     civitai_fetch_loras("DoggyStyle_t2v_HighNoise", "2076026")
     civitai_fetch_loras("DoggyStyle_t2v_LowNoise", "2076035")
 
+    # https://civitai.com/models/1923354?modelVersionId=2176919
+    civitai_fetch_loras("DoggyMQLab_t2v_HighNoise", "2176892")
+    civitai_fetch_loras("DoggyMQLab_t2v_LowNoise", "2176919")
+
+    # Spooning
+    civitai_fetch_loras("SpooningMQLab_t2v_HighNoise", "2169632")
+    civitai_fetch_loras("SpooningMQLab_t2v_LowNoise", "2169679")
+
     # Facial Cumshot
     # https://civitai.com/models/1858645/facial-cumshot-t2v-wan-22-video-lora-k3nk
-    # civitai_fetch_loras("FacialShot_t2v_HighNoise", "2103700")
-    # civitai_fetch_loras("FacialShot_t2v_LowNoise", "2103699")
+    civitai_fetch_loras("FacialShot_t2v_HighNoise", "2103700")
+    civitai_fetch_loras("FacialShot_t2v_LowNoise", "2103699")
 
 
 def source_wan_i2v_nsfw_loras():
