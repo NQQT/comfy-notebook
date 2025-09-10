@@ -6,8 +6,8 @@ from noobish.core import string_switch
 def source_model_qwen_edit(model_size="Q8_0"):
     model_source = "https://huggingface.co/QuantStack/Qwen-Image-Edit-GGUF/resolve/main"
     encoder_source = "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders"
-    vae_source = "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/"
-    
+    vae_source = "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae"
+
     # Downloading Qwen Model
     fetch_asset_diffusion_models(f"{model_source}/Qwen_Image_Edit-{model_size}.gguf")
 
