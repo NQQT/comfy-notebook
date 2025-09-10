@@ -1,4 +1,5 @@
 from ...civitai import civitai_fetch_loras
+from ....comfy import fetch_asset_loras
 
 
 # Installing useful loras
@@ -11,3 +12,9 @@ def source_lora_qwen_edit_useful():
 
     # Try on outfit: https://civitai.com/models/1940532?modelVersionId=2196278
     civitai_fetch_loras("qwen_try_on", "2196278")
+
+    # Lightning Loras
+    fetch_asset_loras(
+        "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-4steps-V2.0.safetensors")
+    # fetch_asset_loras(
+    #    "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-8steps-V1.1.safetensors")
