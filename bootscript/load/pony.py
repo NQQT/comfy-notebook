@@ -12,7 +12,12 @@ with open(common_script, "r") as file:
 
 # Setting up Cyber realistic
 source_model_pony_cyber_realistic()
-# For Illustrious
+
 civitai_fetch_loras("pony_beauty_slider", "518458")
-civitai_fetch_loras("pony_char_seo_baek_hyang", "697834")
+# https://civitai.com/models/341353/expressiveh-hentai-lora-style
 civitai_fetch_loras("pony_expressive_h", "382152")
+# https://civitai.com/models/553414?modelVersionId=615876
+civitai_fetch_loras("pony_char_yoo_iseol", "615876")
+
+#
+civitai_fetch_loras("pony_char_seo_baek_hyang", "697834")
