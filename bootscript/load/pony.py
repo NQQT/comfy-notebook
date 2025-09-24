@@ -19,6 +19,9 @@ civitai_fetch_checkpoints("LucentXLPonyByKlaabu", "1971591")
 # https://civitai.com/models/1115064/pony-realism-slider?modelVersionId=1253021
 civitai_fetch_loras("pony_realism", "1253021")
 
+# https://civitai.com/models/503754/better-cum-pony?modelVersionId=559962
+civitai_fetch_loras("pony_better_cum", "559962")
+
 civitai_fetch_loras("pony_beauty_slider", "518458")
 # https://civitai.com/models/341353/expressiveh-hentai-lora-style
 civitai_fetch_loras("pony_expressive_h", "382152")
