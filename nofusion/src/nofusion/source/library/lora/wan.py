@@ -39,6 +39,19 @@ def source_wan_t2v_nsfw_loras():
 
 
 def source_wan_i2v_nsfw_loras():
+    # Fetching all assets from iGoon because he's awesome!
+    # https://civitaiarchive.com/users/iGoonHard
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/blinkdoggy/resolve/main/iGoon%20-%20Blink_Front_Doggystyle_I2V_HIGH.safetensors",
+        "iGoon_Blink_Front_DoggyStyle_I2V_HIGH.safetensors")
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/blinkdoggy/resolve/main/iGoon%20-%20Blink_Front_Doggystyle_I2V_LOW.safetensors",
+        "iGoon_Blink_Front_DoggyStyle_I2V_LOW.safetensors"
+    )
+
+
+# This is considered old now.
+def source_wan_i2v_nsfw_loras_old():
     # Cock Play
     civitai_fetch_loras("CockPlay_i2v_HighNoise", "2087173")
     civitai_fetch_loras("CockPlay_i2v_LowNoise", "2087124")
