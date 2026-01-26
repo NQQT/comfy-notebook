@@ -7,8 +7,12 @@ def source_wan_i2v_lightning_loras():
     # The Location
     lora_location = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan22-Lightning"
     # Lightning Loras
-    fetch_asset_loras(f"{lora_location}/Wan2.2-Lightning_I2V-A14B-4steps-lora_HIGH_fp16.safetensors")
-    fetch_asset_loras(f"{lora_location}/Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors")
+    # fetch_asset_loras(f"{lora_location}/Wan2.2-Lightning_I2V-A14B-4steps-lora_HIGH_fp16.safetensors")
+    # fetch_asset_loras(f"{lora_location}/Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors")
+
+    lora_location = "https://huggingface.co/lightx2v/Wan2.2-Lightning/resolve/main/Wan2.2-I2V-A14B-4steps-lora-rank64-Seko-V1"
+    fetch_asset_loras(f"{lora_location}/high_noise_model.safetensors?download=true", "4step-lora-seko-high.safetensors")
+    fetch_asset_loras(f"{lora_location}/low_noise_model.safetensors?download=true", "4step-lora-seko-low.safetensors")
 
 
 def source_wan_t2v_lightning_loras():
@@ -39,6 +43,16 @@ def source_wan_t2v_nsfw_loras():
 
 
 def source_wan_i2v_nsfw_loras():
+    # Dreamplay, All in one
+    fetch_asset_loras(
+        "https://huggingface.co/profpeng/nsfwv2/resolve/main/DR34ML4Y_I2V_14B_LOW_V2.safetensors",
+        "DR34ML4Y_I2V_14B_LOW.safetensors"
+    )
+    fetch_asset_loras(
+        "https://huggingface.co/profpeng/nsfwv2/resolve/main/DR34ML4Y_I2V_14B_HIGH_V2.safetensors",
+        "DR34ML4Y_I2V_14B_HIGH.safetensors"
+    )
+
     # Fetching all assets from iGoon because he's awesome!
     # https://civitaiarchive.com/users/iGoonHard
     fetch_asset_loras(
