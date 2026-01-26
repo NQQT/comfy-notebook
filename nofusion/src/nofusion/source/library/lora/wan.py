@@ -63,6 +63,15 @@ def source_wan_i2v_nsfw_loras():
         "iGoon_Blink_Front_DoggyStyle_I2V_LOW.safetensors"
     )
 
+    # https://civitaiarchive.com/models/2172672?modelVersionId=2446684
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/blinkbj/resolve/main/iGOON_Blink_Blowjob_I2V_HIGH(1).safetensors",
+        "iGoon_Blink_Front_BlowJob_I2V_HIGH.safetensors")
+
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/blinkbj/resolve/main/iGOON_Blink_Blowjob_I2V_LOW(1).safetensors",
+        "iGoon_Blink_Front_BlowJob_I2V_LOW.safetensors")
+
 
 # This is considered old now.
 def source_wan_i2v_nsfw_loras_old():
