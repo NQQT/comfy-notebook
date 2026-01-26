@@ -43,7 +43,7 @@ def source_wan_t2v_nsfw_loras():
 
 
 def source_wan_i2v_nsfw_loras():
-    # Dreamplay, All in one
+    # Dream play, All in one
     fetch_asset_loras(
         "https://huggingface.co/profpeng/nsfwv2/resolve/main/DR34ML4Y_I2V_14B_LOW_V2.safetensors",
         "DR34ML4Y_I2V_14B_LOW.safetensors"
@@ -63,14 +63,45 @@ def source_wan_i2v_nsfw_loras():
         "iGoon_Blink_Front_DoggyStyle_I2V_LOW.safetensors"
     )
 
+    # Squatting: https://civitaiarchive.com/models/2203090?modelVersionId=2480524
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/blinksquat/resolve/main/Blink_Squatting_Cowgirl_Position_I2V_HIGH.safetensors",
+        "iGoon_Blink_SquattingCowgirl_I2V_HIGH.safetensors"
+    )
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/blinksquat/resolve/main/Blink_Squatting_Cowgirl_Position_I2V_LOW.safetensors",
+        "iGoon_Blink_SquattingCowgirl_I2V_LOW.safetensors"
+    )
+
     # https://civitaiarchive.com/models/2172672?modelVersionId=2446684
     fetch_asset_loras(
         "https://huggingface.co/SRodge00/blinkbj/resolve/main/iGOON_Blink_Blowjob_I2V_HIGH(1).safetensors",
-        "iGoon_Blink_Front_BlowJob_I2V_HIGH.safetensors")
+        "iGoon_Blink_BlowJob_I2V_HIGH.safetensors")
 
     fetch_asset_loras(
         "https://huggingface.co/SRodge00/blinkbj/resolve/main/iGOON_Blink_Blowjob_I2V_LOW(1).safetensors",
-        "iGoon_Blink_Front_BlowJob_I2V_LOW.safetensors")
+        "iGoon_Blink_BlowJob_I2V_LOW.safetensors")
+
+    # Facial
+    fetch_asset_loras(
+        "https://huggingface.co/FataleCherry/Lo_BlinkFacial/resolve/main/iGoon%20-%20Blink_Facial_I2V_LOW.safetensors",
+        "iGoon_Blink_Facial_I2V_LOW.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/FataleCherry/hi_BlinkFacial/resolve/main/iGoon%20-%20Blink_Facial_I2V_HIGH.safetensors",
+        "iGoon_Blink_Facial_I2V_HIGH.safetensors"
+    )
+
+    # Missionary
+    fetch_asset_loras(
+        "https://huggingface.co/FataleCherry/Lo_BlinkMissionary/resolve/main/iGoon%20-%20Blink_Missionary_I2V_LOW%20v2.safetensors",
+        "iGoon_Blink_Missionary_I2V_LOW.safetensors"
+    )
+    fetch_asset_loras(
+        "https://huggingface.co/FataleCherry/hi_BlinkMissionary/resolve/main/iGoon_Blink_Missionary_I2V_HIGH%20v2.safetensors",
+        "iGoon_Blink_Missionary_I2V_HIGH.safetensors"
+    )
 
 
 # This is considered old now.
