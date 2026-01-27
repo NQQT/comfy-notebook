@@ -103,6 +103,32 @@ def source_wan_i2v_nsfw_loras():
         "iGoon_Blink_Missionary_I2V_HIGH.safetensors"
     )
 
+    # Deepthroat / Facefuck Loras
+    fetch_asset_loras(
+        "https://huggingface.co/profpeng/deepthroat/resolve/main/Wan22_ThroatV3_High.safetensors",
+        "CivitaiWolf_Deepthroat_v3_HIGH.safetensors"
+    )
+    fetch_asset_loras(
+        "https://huggingface.co/Paolo222/DPaint/resolve/main/Wan22_Face_fuck_ThroatV3_Low.safetensors",
+        "CivitaiWolf_Deepthroat_v3_LOW.safetensors"
+    )
+
+    # Cumshot / Facials
+    fetch_asset_loras(
+        "https://huggingface.co/jortestingss/facec/resolve/main/Wan22_CumV2_High.safetensors",
+        "CivitaiWolf_Facial_v2_HIGH.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/Zachimo/WanCum2/resolve/main/Wan22_CumV2_Low.safetensors",
+        "CivitaiWolf_Facial_v2_LOW.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/neph1/hard_cut_wan_lora/resolve/main/hard_cut_3_wan_i2v_high.safetensors",
+        "Neph1_CinematicHardCut_v3_HIGH.safetensors"
+    )
+
 
 # This is considered old now.
 def source_wan_i2v_nsfw_loras_old():
