@@ -1,11 +1,11 @@
 # For Setting up Cyber Realistic
 from ....comfy import fetch_asset_vae, fetch_asset_text_encoders
-from ....source import civitai_fetch_checkpoints
+from ....source import civitai_fetch_diffusion_models
 
 
 def source_model_zimage_moody_mix():
     # Moody Mix
-    civitai_fetch_checkpoints("ZImageMoodyMix", "2633363")
+    civitai_fetch_diffusion_models("ZImageMoodyMix", "2633363")
 
     # Text-encoder
     fetch_asset_text_encoders(
