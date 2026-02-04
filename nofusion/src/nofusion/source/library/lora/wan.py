@@ -124,6 +124,17 @@ def source_wan_i2v_nsfw_loras():
         "CivitaiWolf_Facial_v2_LOW.safetensors"
     )
 
+    # Oral Creampie
+    fetch_asset_loras(
+        "https://huggingface.co/fiojanea/Esan_testi/resolve/main/wan22-mouthfull-140epoc-high-k3nk.safetensors",
+        "K3NK_Mouthful_v1_HIGH.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/hank87/pnsenterfillmouthwn22/resolve/main/wan22-mouthfull-152epoc-low-k3nk.safetensors",
+        "K3NK_Mouthful_v1_LOW.safetensors"
+    )
+
     fetch_asset_loras(
         "https://huggingface.co/neph1/hard_cut_wan_lora/resolve/main/hard_cut_3_wan_i2v_high.safetensors",
         "Neph1_CinematicHardCut_v3_HIGH.safetensors"
