@@ -9,12 +9,20 @@ def source_model_wan_i2v_all_in_one():
 
 
 def source_model_wan_smooth_mix():
-    fetch_asset_checkpoints(
+    fetch_asset_diffusion_models(
         "https://civitai.com/api/download/models/2555640?type=Model&format=SafeTensor&fp=fp8&token=813701a486b32b80542dd5606dd8efdf",
         "DaSiWa_WAN_v9_HIGH.safetensors")
-    fetch_asset_checkpoints(
+    fetch_asset_diffusion_models(
         "https://civitai.com/api/download/models/2555652?type=Model&format=SafeTensor&fp=fp8&token=813701a486b32b80542dd5606dd8efdf",
         "DaSiWa_WAN_v9_LOW.safetensors")
+
+    # Required Text Encoder
+    fetch_asset_text_encoders(
+        "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors")
+
+    # Required Vae
+    fetch_asset_vae(
+        "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors")
 
 
 # For installing wan text to video
