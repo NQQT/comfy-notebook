@@ -8,13 +8,30 @@ def source_model_wan_i2v_all_in_one():
         "https://huggingface.co/Phr00t/WAN2.2-14B-Rapid-AllInOne/resolve/main/v9/wan2.2-i2v-rapid-aio-nsfw-v9.2.safetensors")
 
 
-def source_model_wan_smooth_mix():
+def source_model_wan_dasiwa():
     fetch_asset_diffusion_models(
         "https://civitai.com/api/download/models/2555640?type=Model&format=SafeTensor&fp=fp8&token=813701a486b32b80542dd5606dd8efdf",
         "DaSiWa_WAN_v9_HIGH.safetensors")
     fetch_asset_diffusion_models(
         "https://civitai.com/api/download/models/2555652?type=Model&format=SafeTensor&fp=fp8&token=813701a486b32b80542dd5606dd8efdf",
         "DaSiWa_WAN_v9_LOW.safetensors")
+
+    # Required Text Encoder
+    fetch_asset_text_encoders(
+        "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors")
+
+    # Required Vae
+    fetch_asset_vae(
+        "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors")
+
+
+def source_model_wan_smooth_mix():
+    fetch_asset_diffusion_models(
+        "https://civitai.com/api/download/models/2260110?type=Model&format=SafeTensor&size=pruned&fp=fp8&token=813701a486b32b80542dd5606dd8efdf",
+        "SmoothMix_WAN_v1_HIGH.safetensors")
+    fetch_asset_diffusion_models(
+        "https://civitai.com/api/download/models/2259006?type=Model&format=SafeTensor&size=pruned&fp=fp8&token=813701a486b32b80542dd5606dd8efdf",
+        "SmoothMix_WAN_v1_LOW.safetensors")
 
     # Required Text Encoder
     fetch_asset_text_encoders(

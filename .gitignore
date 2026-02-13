@@ -3,3 +3,4 @@
 kaggle.ipynb
 playground
 *.egg-info/
+__pycache__/*
