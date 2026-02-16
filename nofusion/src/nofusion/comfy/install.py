@@ -74,8 +74,6 @@ def install_comfy_ui(checkout_version=None):
     fetch_custom_node("https://github.com/ClownsharkBatwing/RES4LYF")
     # for loading GGUF model
     fetch_custom_node("https://github.com/city96/ComfyUI-GGUF")
-    # for multi GPU
-    fetch_custom_node("https://github.com/pollockjj/ComfyUI-MultiGPU")
     # For intepolation
     fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
     # For running Cloud Based ComfyUI with Local Controls
