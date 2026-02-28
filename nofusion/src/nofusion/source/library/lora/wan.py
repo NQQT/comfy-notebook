@@ -73,6 +73,17 @@ def source_wan_i2v_nsfw_loras():
         "iGoon_Blink_SquattingCowgirl_I2V_LOW.safetensors"
     )
 
+    # Handjob
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/hjblink/resolve/main/iGoon%20-%20Blink_Handjob_I2V_HIGH.safetensors",
+        "iGoon_Blink_Handjob_I2V_HIGH.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/hjblink/resolve/main/iGoon%20-%20Blink_Handjob_I2V_LOW.safetensors",
+        "iGoon_Blink_Handjob_I2V_LOW.safetensors"
+    )
+
     # https://civitaiarchive.com/models/2172672?modelVersionId=2446684
     fetch_asset_loras(
         "https://huggingface.co/SRodge00/blinkbj/resolve/main/iGOON_Blink_Blowjob_I2V_HIGH(1).safetensors",
@@ -84,23 +95,34 @@ def source_wan_i2v_nsfw_loras():
 
     # Facial
     fetch_asset_loras(
-        "https://huggingface.co/FataleCherry/Lo_BlinkFacial/resolve/main/iGoon%20-%20Blink_Facial_I2V_LOW.safetensors",
+        "https://huggingface.co/SRodge00/facialblink/resolve/main/iGoon%20-%20Blink_Facial_I2V_LOW.safetensors",
         "iGoon_Blink_Facial_I2V_LOW.safetensors"
     )
 
     fetch_asset_loras(
-        "https://huggingface.co/FataleCherry/hi_BlinkFacial/resolve/main/iGoon%20-%20Blink_Facial_I2V_HIGH.safetensors",
+        "https://huggingface.co/SRodge00/facialblink/resolve/main/iGoon%20-%20Blink_Facial_I2V_HIGH.safetensors",
         "iGoon_Blink_Facial_I2V_HIGH.safetensors"
     )
 
     # Missionary
     fetch_asset_loras(
-        "https://huggingface.co/FataleCherry/Lo_BlinkMissionary/resolve/main/iGoon%20-%20Blink_Missionary_I2V_LOW%20v2.safetensors",
+        "https://huggingface.co/SRodge00/blinkmissionary2/resolve/main/iGoon%20-%20Blink_Missionary_I2V_LOW%20v2.safetensors",
         "iGoon_Blink_Missionary_I2V_LOW.safetensors"
     )
     fetch_asset_loras(
-        "https://huggingface.co/FataleCherry/hi_BlinkMissionary/resolve/main/iGoon_Blink_Missionary_I2V_HIGH%20v2.safetensors",
+        "https://huggingface.co/SRodge00/blinkmissionary2/resolve/main/iGoon_Blink_Missionary_I2V_HIGH%20v2.safetensors",
         "iGoon_Blink_Missionary_I2V_HIGH.safetensors"
+    )
+
+    # Boobjob
+    fetch_asset_loras(
+        "https://huggingface.co/baka-ending19/Wan2.2/resolve/main/iGoon_Blink_Titjob_I2V_HIGH.safetensors",
+        "iGoon_Blink_Boobjob_I2V_HIGH.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/SR47/blinktitjob/resolve/main/iGoon_Blink_Titjob_I2V_LOW.safetensors",
+        "iGoon_Blink_Boobjob_I2V_LOW.safetensors"
     )
 
     # Deepthroat / Facefuck Loras
