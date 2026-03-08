@@ -22,3 +22,13 @@ def source_model_ltx2():
     fetch_asset_text_encoders(
         "https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/text_encoders/gemma_3_12B_it.safetensors?download=true"
     )
+
+    # Include these loras
+    fetch_asset_loras(
+        "https://huggingface.co/Sentinel7/ltxv/resolve/main/2378690/2674954/LTX2-i2v-SexThrust.safetensors")
+    fetch_asset_loras(
+        "https://huggingface.co/UnifiedHorusRA/028220/resolve/main/LTX2_-_Oral_Suite/LTXV/LTX2-i2v-OralSuite.safetensors"
+    )
+    fetch_asset_loras(
+        "https://huggingface.co/Sentinel7/ltxv/resolve/main/2352621/2668170/TittyvidLTX_000007750.safetensors"
+    )
