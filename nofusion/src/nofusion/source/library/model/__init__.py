@@ -1,3 +1,4 @@
+from .ltx2 import *
 from .pony import *
 from .qwen import *
 from .seedvr2 import *
