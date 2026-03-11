@@ -27,8 +27,34 @@ def source_model_ltx2():
     fetch_asset_loras(
         "https://huggingface.co/Sentinel7/ltxv/resolve/main/2378690/2674954/LTX2-i2v-SexThrust.safetensors")
     fetch_asset_loras(
-        "https://huggingface.co/UnifiedHorusRA/028220/resolve/main/LTX2_-_Oral_Suite/LTXV/LTX2-i2v-OralSuite.safetensors"
+        "https://huggingface.co/UnifiedHorusRA/028220/resolve/main/LTX2_-_Oral_Suite/LTXV/LTX2-i2v-OralSuite.safetensors",
+        "LTX2-Oral-Suite.safetensors"
     )
     fetch_asset_loras(
-        "https://huggingface.co/Sentinel7/ltxv/resolve/main/2352621/2668170/TittyvidLTX_000007750.safetensors"
+        "https://huggingface.co/Sentinel7/ltxv/resolve/main/2352621/2668170/TittyvidLTX_000007750.safetensors",
+        "LTX2-Better-Titty.safetensors"
+    )
+    fetch_asset_loras(
+        "https://huggingface.co/matedivya/ponylora-jan27/resolve/main/102-Better-Female-Nudity-jan27.safetensors",
+        "LTX2-Better-Female-Nudity.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/Sentinel7/ltxv/resolve/main/2332473/2729047/Penile_Praxis_V3.1.safetensors",
+        "LTX2-Praxis-General.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/ThirdTimesTheCiarc/base_latex/resolve/main/2032489/2682194/manga_beret%20mix.safetensors",
+        "LTX2-Manga-Style.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/Sentinel7/ltxv/resolve/main/2416244/2716592/LTXTF_000011500.safetensors",
+        "LTX2-Titty-Fun.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/UnifiedHorusRA/028220v2/resolve/main/POV_NSFW_LTX2_Updated_v3_0/LTXV2/povnsfw-v3-complete.safetensors",
+        "LTX2-General-Pov.safetensors"
     )
