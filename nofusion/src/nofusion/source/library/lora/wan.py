@@ -145,6 +145,26 @@ def source_wan_i2v_nsfw_loras():
         "Neph1_CinematicHardCut_v3_HIGH.safetensors"
     )
 
+    fetch_asset_loras(
+        "https://huggingface.co/ai-effects/w22i2vl/resolve/main/s/fllbkkk/high.safetensors",
+        "qdr1en_sh00tz_series_of_cumshots_HIGH.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/boobkake22/LoRA-Archive/resolve/main/sh00tz_LN_75.safetensors",
+        "qdr1en_sh00tz_series_of_cumshots_LOW.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/ultimatedeepthroat/resolve/main/wan22-ultimatedeepthroat-i2v-102epoc-high-k3nk.safetensors",
+        "K3NK-Ultimate-Deepthroat_HIGH.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/SRodge00/ultimatedeepthroat/resolve/main/wan22-ultimatedeepthroat-I2V-101epoc-low-k3nk.safetensors",
+        "K3NK-Ultimate-Deepthroat_LOW.safetensors"
+    )
+
 
 # This is considered old now.
 def source_wan_i2v_nsfw_loras_old():

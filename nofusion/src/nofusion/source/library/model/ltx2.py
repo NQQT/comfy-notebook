@@ -58,3 +58,9 @@ def source_model_ltx2():
         "https://huggingface.co/UnifiedHorusRA/028220v2/resolve/main/POV_NSFW_LTX2_Updated_v3_0/LTXV2/povnsfw-v3-complete.safetensors",
         "LTX2-General-Pov.safetensors"
     )
+
+    # All in one: https://civitai.com/models/1811313/dr34ml4y-all-in-one-nsfw-wanltx2?modelVersionId=2747549
+    fetch_asset_loras(
+        "https://civitai.com/api/download/models/2747549?type=Model&format=SafeTensor&token=813701a486b32b80542dd5606dd8efdf",
+        "LTX2-DR34ML4Y-AllInOne.safetensors"
+    )
