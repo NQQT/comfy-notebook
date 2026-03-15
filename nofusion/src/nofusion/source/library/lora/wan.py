@@ -151,6 +151,21 @@ def source_wan_i2v_nsfw_loras():
     )
 
     fetch_asset_loras(
+        "https://huggingface.co/Sentinel7/wan/resolve/main/2463101/2769405/f4c3fck_HN_75.safetensors",
+        "wan22-reverse-face-HIGH.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/Sentinel7/wan/resolve/main/2463101/2769405/f4c3fck_HN_75.safetensors",
+        "wan22-reverse-face-HIGH.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/Sentinel7/wan/resolve/main/2463101/2769404/f4c3fck_LN_75.safetensors",
+        "wan22-reverse-face-LOW.safetensors"
+    )
+
+    fetch_asset_loras(
         "https://huggingface.co/boobkake22/LoRA-Archive/resolve/main/sh00tz_LN_75.safetensors",
         "qdr1en_sh00tz_series_of_cumshots_LOW.safetensors"
     )
@@ -163,6 +178,29 @@ def source_wan_i2v_nsfw_loras():
     fetch_asset_loras(
         "https://huggingface.co/SRodge00/ultimatedeepthroat/resolve/main/wan22-ultimatedeepthroat-I2V-101epoc-low-k3nk.safetensors",
         "K3NK-Ultimate-Deepthroat_LOW.safetensors"
+    )
+
+    # Smooth XXX Animation
+    fetch_asset_loras(
+        "https://huggingface.co/Kutches/2BasedV3/resolve/main/wan22-SmoothXAnimation_High.safetensors",
+        "SmoothXAnimation_HIGH_safetensors"
+    )
+    fetch_asset_loras(
+        "https://huggingface.co/KeyOpening8063587/SMOOTHXXX/resolve/main/SmoothXXXAnimation_Low.safetensors",
+        "wan22-SmoothXAnimation_Low.safetensors"
+    )
+
+    fetch_asset_loras(
+        "https://huggingface.co/UnifiedHorusRA/WI2VV4/resolve/main/I2V_-_Sex_from_behind_front_facing/Wan_Video_2_2_I2V-A14B/sfbehind_v2.1_high_noise.safetensors",
+        "wan22-FromBehind_High.safetensors"
+    )
+    fetch_asset_loras(
+        "https://huggingface.co/UnifiedHorusRA/WI2VV4/resolve/main/I2V_-_Sex_from_behind_front_facing/Wan_Video_2_2_I2V-A14B/sfbehind_v2.1_low_noise.safetensors",
+        "wan22-FromBehind_Low.safetensors"
+    )
+    fetch_asset_loras(
+        "https://huggingface.co/UnifiedHorusRA/TheWan2.2I2V2/resolve/main/Cinematic_Fast_Cutting_previously_Quick_Cuts/Wan_Video_2_2_I2V-A14B/quick_cuts_v2_wan_high_150.safetensors",
+        "wan22-Cinematic-Fast-Cut-High.safetensors"
     )
 
 
