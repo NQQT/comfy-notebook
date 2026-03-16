@@ -74,9 +74,9 @@ def install_comfy_ui(checkout_version=None):
     fetch_custom_node("https://github.com/ClownsharkBatwing/RES4LYF")
     # for loading GGUF model
     fetch_custom_node("https://github.com/city96/ComfyUI-GGUF")
-    # For intepolation
-    fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
+    # For interpolation, but LTX23 is better now days.
+    # fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
     # For running Cloud Based ComfyUI with Local Controls
     fetch_custom_node("https://github.com/comfyscript/ComfyUI-CloudClient")
     # For Upscaling and So on
-    fetch_custom_node("https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler")
+    # fetch_custom_node("https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler")
