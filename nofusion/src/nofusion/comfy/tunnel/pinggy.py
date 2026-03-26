@@ -4,6 +4,8 @@ import socket
 import subprocess
 import sys
 import time
+import urllib.request
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from multiprocessing import Process
 
 import psutil
@@ -14,20 +16,61 @@ def is_port_in_use(port):
         return s.connect_ex(('127.0.0.1', port)) == 0
 
 
+def make_cors_proxy(target_port, proxy_port):
+    class CORSProxy(BaseHTTPRequestHandler):
+        def log_message(self, format, *args):
+            pass  # suppress default logging
+
+        def do_OPTIONS(self):
+            self.send_response(200)
+            self._send_cors_headers()
+            self.end_headers()
+
+        def _send_cors_headers(self):
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
+
+        def _proxy(self):
+            url = f'http://localhost:{target_port}{self.path}'
+            body = None
+            if self.command in ('POST', 'PUT', 'PATCH'):
+                length = int(self.headers.get('Content-Length', 0))
+                body = self.rfile.read(length) if length else None
+
+            req_headers = {k: v for k, v in self.headers.items()
+                           if k.lower() not in ('host', 'content-length')}
+            req = urllib.request.Request(url, data=body, headers=req_headers, method=self.command)
+            try:
+                with urllib.request.urlopen(req) as resp:
+                    self.send_response(resp.status)
+                    for k, v in resp.headers.items():
+                        if k.lower() not in ('transfer-encoding',):
+                            self.send_header(k, v)
+                    self._send_cors_headers()
+                    self.end_headers()
+                    self.wfile.write(resp.read())
+            except urllib.error.HTTPError as e:
+                self.send_response(e.code)
+                self._send_cors_headers()
+                self.end_headers()
+                self.wfile.write(e.read())
+
+        do_GET = do_POST = do_PUT = do_DELETE = do_PATCH = _proxy
+
+    return HTTPServer(('localhost', proxy_port), CORSProxy)
+
+
+def run_cors_proxy(target_port, proxy_port):
+    server = make_cors_proxy(target_port, proxy_port)
+    print(f"CORS proxy running on port {proxy_port} → forwarding to {target_port}")
+    server.serve_forever()
+
+
 def run_app(env, command, port):
     print(command)
-    cors_headers = (
-        "a:Access-Control-Allow-Origin:* "
-        "a:Access-Control-Allow-Methods:GET,POST,PUT,DELETE,OPTIONS "
-        "a:Access-Control-Allow-Headers:Content-Type,Authorization"
-    )
-    ssh_cmd = (
-        f'ssh -o StrictHostKeyChecking=no -p 80 '
-        f'-R0:localhost:{port} '
-        f'a.pinggy.io {cors_headers}'
-    )
     subprocess.run(
-        f'{command} & {ssh_cmd} > log.txt',
+        f'{command} & ssh -o StrictHostKeyChecking=no -p 80 -R0:localhost:{port} a.pinggy.io > log.txt',
         shell=True, env=env
     )
 
@@ -83,16 +126,27 @@ def main():
     print(args.port)
     print(args.command)
     env = os.environ.copy()
-    target_port = args.port
+    target_port = int(args.port)
+    proxy_port = target_port + 1  # CORS proxy sits one port up
     command = args.command
-    if is_port_in_use(int(target_port)):
-        find_and_terminate_process(int(target_port))
+
+    if is_port_in_use(target_port):
+        find_and_terminate_process(target_port)
     else:
         print(f"Port {target_port} is free.")
 
+    if is_port_in_use(proxy_port):
+        find_and_terminate_process(proxy_port)
+
     open('log.txt', 'w').close()
-    p_app = Process(target=run_app, args=(env, command, target_port,))
+
+    # Run app on target_port, proxy on proxy_port, pinggy tunnels proxy_port
+    p_app = Process(target=run_app, args=(env, command, proxy_port,))
+    p_proxy = Process(target=run_cors_proxy, args=(target_port, proxy_port,))
     p_url = Process(target=print_url)
+
+    p_proxy.start()
+    time.sleep(0.5)  # let proxy start before tunneling
     p_app.start()
     p_url.start()
     p_app.join()
