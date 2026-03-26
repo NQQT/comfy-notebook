@@ -16,8 +16,20 @@ def is_port_in_use(port):
 
 def run_app(env, command, port):
     print(command)
-    subprocess.run(f'{command} & ssh -o StrictHostKeyChecking=no -p 80 -R0:localhost:{port} a.pinggy.io > log.txt',
-                   shell=True, env=env)
+    cors_headers = (
+        "a:Access-Control-Allow-Origin:* "
+        "a:Access-Control-Allow-Methods:GET,POST,PUT,DELETE,OPTIONS "
+        "a:Access-Control-Allow-Headers:Content-Type,Authorization"
+    )
+    ssh_cmd = (
+        f'ssh -o StrictHostKeyChecking=no -p 80 '
+        f'-R0:localhost:{port} '
+        f'a.pinggy.io {cors_headers}'
+    )
+    subprocess.run(
+        f'{command} & {ssh_cmd} > log.txt',
+        shell=True, env=env
+    )
 
 
 def print_url():
@@ -59,7 +71,6 @@ def find_and_terminate_process(port):
                     except psutil.NoSuchProcess:
                         print(f"Process with PID {process.info['pid']} not found")
         except (psutil.AccessDenied, psutil.NoSuchProcess):
-            # Skip processes we can't access
             continue
 
 
