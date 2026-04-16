@@ -1,7 +1,7 @@
 # For generating a model link to download
 from noobish.core import string_switch
 
-from ..comfy import fetch_asset_checkpoints, fetch_asset_loras
+from ..comfy import fetch_asset_checkpoints, fetch_asset_loras, fetch_asset_diffusion_models
 from ..config import variables
 
 
@@ -49,3 +49,10 @@ def civitai_fetch_checkpoints(model_name: str, model_id: str):
     model_url = civitai_fetch_url(model_id)
     # Fetching the asset checkpoints
     fetch_asset_checkpoints(model_url, model_name + ".safetensors")
+
+
+def civitai_fetch_diffusion_models(model_name: str, model_id: str):
+    # Constructing the Lora URL
+    model_url = civitai_fetch_url(model_id)
+    # Fetching the asset checkpoints
+    fetch_asset_diffusion_models(model_url, model_name + ".safetensors")

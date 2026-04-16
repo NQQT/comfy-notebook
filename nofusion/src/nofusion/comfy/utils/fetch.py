@@ -57,6 +57,14 @@ def fetch_asset_checkpoints(location: str, name: str = None):
     })
 
 
+def fetch_asset_latent_upscale_model(location: str, name: str = None):
+    return fetch_asset({
+        "type": "latent_upscale_models",
+        "name": name,
+        "location": location,
+    })
+
+
 def fetch_asset_diffusion_models(location: str, name: str = None):
     fetch_asset({
         "type": "diffusion_models",

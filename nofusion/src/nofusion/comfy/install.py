@@ -8,8 +8,21 @@ from ..install import install_package
 from ..shell import shell_command
 
 
+def reinstall_comfy_ui():
+    # Getting the variables
+    root_dir = variables("root")
+    comfy_name = variables("name.comfy")
+    os.chdir(root_dir)
+
+    # Remove ComfyUI Completely
+    shell_command(f"rm -rf ${comfy_name}")
+
+    # Installing ComfyUI
+    install_comfy_ui()
+
+
 # For installing comfy UI
-def install_comfy_ui(checkout_version="e2d1e5dad98dbbcf505703ea8663f20101e6570a"):
+def install_comfy_ui(checkout_version=None):
     # Configuring Variables
     configure_variables()
 
@@ -20,10 +33,14 @@ def install_comfy_ui(checkout_version="e2d1e5dad98dbbcf505703ea8663f20101e6570a"
     os.chdir(root_dir)
     # Executing Shell Commands
     # Cloning Comfy UI
+
     shell_command(f"git clone https://github.com/comfyanonymous/ComfyUI.git {comfy_name}")
 
     os.chdir(f"{root_dir}/{comfy_name}")
-    shell_command(f"git checkout {checkout_version}")
+
+    # Checking out a branch
+    if not checkout_version is None:
+        shell_command(f"git checkout {checkout_version}")
 
     pip = variables("pip")
 
@@ -36,9 +53,6 @@ def install_comfy_ui(checkout_version="e2d1e5dad98dbbcf505703ea8663f20101e6570a"
         f"mkdir {location_ipadaptor()}"
     )
 
-    # Download Comfy UI Manager
-    fetch_custom_node("https://github.com/Comfy-Org/ComfyUI-Manager")
-
     # Additional installation to use
     install_package(
         "pillow==10.2.0",
@@ -49,6 +63,9 @@ def install_comfy_ui(checkout_version="e2d1e5dad98dbbcf505703ea8663f20101e6570a"
     )
 
     # For installing custom nodes
+    # Download Comfy UI Manager
+    # fetch_custom_node("https://github.com/Comfy-Org/ComfyUI-Manager")
+
     fetch_custom_node("https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite")
     fetch_custom_node("https://github.com/kijai/ComfyUI-KJNodes")
     # git_custom_node("https://github.com/yolain/ComfyUI-Easy-Use","717092a3ceb51c474b5b3f77fc188979f0db9d67")
@@ -57,12 +74,9 @@ def install_comfy_ui(checkout_version="e2d1e5dad98dbbcf505703ea8663f20101e6570a"
     fetch_custom_node("https://github.com/ClownsharkBatwing/RES4LYF")
     # for loading GGUF model
     fetch_custom_node("https://github.com/city96/ComfyUI-GGUF")
-    # for multi GPU
-    fetch_custom_node("https://github.com/pollockjj/ComfyUI-MultiGPU")
-    fetch_custom_node("https://github.com/skyiron/ComfyUI-DistributedGPU")
-    # for interpolation
-    fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
+    # For interpolation, but LTX23 is better now days.
+    # fetch_custom_node("https://github.com/kijai/ComfyUI-GIMM-VFI")
     # For running Cloud Based ComfyUI with Local Controls
     fetch_custom_node("https://github.com/comfyscript/ComfyUI-CloudClient")
-    # For Upscaling and so on
-    fetch_custom_node("https://github.com/kijai/ComfyUI-SUPIR")
+    # For Upscaling and So on
+    # fetch_custom_node("https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler")
