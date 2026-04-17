@@ -67,7 +67,7 @@ def wait_for_comfyui(host="127.0.0.1", port=8188, timeout=120, interval=2):
 
 # This is to start the comfy ui thread
 def initiate_comfy_ui_thread():
-    thread, stop_server = start_comfyui_server()
+    thread, stop_server = start_comfy_ui_thread()
 
     # # Auto-kill after 30 seconds (non-blocking, like JS setTimeout)
     # timer = threading.Timer(30, stop_server)

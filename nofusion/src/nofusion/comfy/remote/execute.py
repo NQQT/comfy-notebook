@@ -56,9 +56,9 @@ async def run_with_log_monitor(api, workflow, output_node, log_path, poll_interv
 
 
 async def start_comfy_ui_slave(poll_interval: float = 5.0):
-    from comfy_api_simplified import ComfyApi
+    from comfy_api_simplified import ComfyApiWrapper
 
-    api = ComfyApi("http://127.0.0.1:8188")
+    api = ComfyApiWrapper("http://127.0.0.1:8188")
     stash_id = variables("stash")
     name = variables("name.agent")
 
@@ -75,7 +75,7 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
             available_files = db_master.list()
 
             # If no work is queued, wait before checking again
-            if "workflow.json" not in available_files:
+            if not any(f["filename"] == "workflow.json" for f in available_files):
                 # Waiting for workflow.json
                 log_idle("pending")
 
@@ -87,9 +87,13 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
 
             # Download and parse the workflow
             json_string = db_master.get("workflow.json")
-            workflow = json.loads(json_string)
 
-            # Announce this slave is alive and working
+            if isinstance(json_string, dict):
+                workflow = json_string  # Already parsed
+            else:
+                workflow = json.loads(json_string)
+
+                # Announce this slave is alive and working
             log_busy("processing")
 
             # Run the workflow

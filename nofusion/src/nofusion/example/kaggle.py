@@ -1,23 +1,28 @@
-# Starting Kaggle Example
-def kaggle_start(root="/kaggle/working"):
-    from nofusion.comfy import install_comfy_ui, start_pinggy_tunnel
-    from nofusion.config import variables
-    from nofusion.install import install_venv
-    # Starting with Kaggle
-    from nofusion.setup import setup_cyber_realistic
+from nofusion.comfy import initiate_comfy_ui_thread, start_comfy_ui_slave, log_setup
+from nofusion.config import variables
 
-    # Setting the variables
-    variables({
-        # Require to define the correct root for kaggle
-        "root": root
-    })
+# Configuring Variables
+configure_variables()
 
-    # Installing virtual env
-    install_venv()
-    install_comfy_ui()
+# Global variable configuration
+variables({
+    # The name of this agent
+    "name": {
+        "agent": "james"
+    },
+    "stash": "kaggle_test",
+    # Define the cloud environment for optimisation
+    "cloud": "kaggle",
+    # Use Coda Version 118
+    "cuda": "118",
+    # Require to define the correct root for kaggle
+    "root": "/kaggle/working"
+})
 
-    # Setting up Cyber realistic
-    setup_cyber_realistic()
+# Setting up comfy server
+log_setup("comfy-server")
+initiate_comfy_ui_thread()
 
-    # Just run CPU for now
-    start_pinggy_tunnel()
+# Starting the slave
+log_setup("initialising")
+start_comfy_ui_slave()
