@@ -1,4 +1,4 @@
-from .services import FileBin
+from .services import FileBin, RestServiceResponseBody
 
 
 # Database structure
