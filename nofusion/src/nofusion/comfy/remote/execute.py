@@ -6,11 +6,10 @@ import threading
 import time
 from datetime import datetime
 
-from comfy_api_simplified import ComfyApi
 from noobish.web import Database
 
-from ..config import variables
 from .logging import log_busy, log_idle
+from ..config import variables
 
 
 # This allows to run log monitoring
@@ -57,6 +56,8 @@ async def run_with_log_monitor(api, workflow, output_node, log_path, poll_interv
 
 
 async def start_comfy_ui_slave(poll_interval: float = 5.0):
+    from comfy_api_simplified import ComfyApi
+    
     api = ComfyApi("http://127.0.0.1:8188")
     stash_id = variables("stash")
     name = variables("name")
@@ -77,7 +78,7 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
             if "workflow.json" not in available_files:
                 # Waiting for workflow.json
                 log_idle("pending")
-                
+
                 print(f"[slave:{name}] workflow.json not found — sleeping...")
                 await asyncio.sleep(random.uniform(5.0, 10.0))
                 continue
