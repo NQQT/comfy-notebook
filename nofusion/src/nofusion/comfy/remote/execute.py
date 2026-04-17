@@ -57,10 +57,10 @@ async def run_with_log_monitor(api, workflow, output_node, log_path, poll_interv
 
 async def start_comfy_ui_slave(poll_interval: float = 5.0):
     from comfy_api_simplified import ComfyApi
-    
+
     api = ComfyApi("http://127.0.0.1:8188")
     stash_id = variables("stash")
-    name = variables("name")
+    name = variables("name.agent")
 
     # Master is controlled by the user
     db_master = Database(stash_id)

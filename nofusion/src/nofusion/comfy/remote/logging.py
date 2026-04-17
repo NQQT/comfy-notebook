@@ -7,7 +7,7 @@ from ..config import variables
 def _log(status: str, details: str):
     # Accessing the cloud database
     stash_id = variables("stash");
-    name = variables("name");
+    name = variables("name.agent");
 
     # Accessing database
     database = Database(f"{stash_id}_agent")
@@ -24,6 +24,7 @@ def log_idle(details: str = ""):
 # Log idle state
 def log_busy(details: str = ""):
     _log("busy", details)
+
 
 # Log idle state
 def log_setup(details: str = ""):
