@@ -8,7 +8,8 @@ from ..install import install_package
 from ..shell import shell_command
 
 
-def reinstall_comfy_ui():
+# For Reinstalling Comfy UI (if something went wrong)
+def reinstall_comfy_ui(checkout_version=None):
     # Getting the variables
     root_dir = variables("root")
     comfy_name = variables("name.comfy")
@@ -18,7 +19,7 @@ def reinstall_comfy_ui():
     shell_command(f"rm -rf ${comfy_name}")
 
     # Installing ComfyUI
-    install_comfy_ui()
+    install_comfy_ui(checkout_version)
 
 
 # For installing comfy UI
