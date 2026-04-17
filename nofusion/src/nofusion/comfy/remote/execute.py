@@ -1,11 +1,20 @@
+import asyncio
+import base64
+import json
+import random
 import threading
 import time
+from datetime import datetime
 
 from comfy_api_simplified import ComfyApi
-from noobish.web import FileBin
+from noobish.web import Database
+
+from ..config import variables
+from .logging import log_busy, log_idle
 
 
-async def run_with_log_monitor(api, name, workflow, output_node, log_path, poll_interval=2.0):
+# This allows to run log monitoring
+async def run_with_log_monitor(api, workflow, output_node, log_path, poll_interval=2.0):
     loop = asyncio.get_event_loop()
     stop_event = threading.Event()
 
@@ -47,33 +56,28 @@ async def run_with_log_monitor(api, name, workflow, output_node, log_path, poll_
     return results
 
 
-import asyncio
-import json
-import random
-import string
-from datetime import datetime
-
-
-def _random_name(length=8) -> str:
-    return "".join(random.choices(string.ascii_lowercase + string.digits, k=length))
-
-
-async def start_comfy_ui_slave(bin_location="kaggle_test", poll_interval: float = 5.0):
+async def start_comfy_ui_slave(poll_interval: float = 5.0):
     api = ComfyApi("http://127.0.0.1:8188")
-    name = _random_name()
+    stash_id = variables("stash")
+    name = variables("name")
 
-    filebin_master = FileBin(bin_location)
-    filebin_storage = FileBin(f"{bin_location}_stash")
+    # Master is controlled by the user
+    db_master = Database(stash_id)
+    # Stash to store data
+    db_storage = Database(f"{stash_id}_stash")
 
-    print(f"[slave:{name}] Starting. Watching bin: {bin_location}")
+    print(f"[slave:{name}] Starting. Watching bin: {stash_id}")
 
     while True:
         try:
             # Refresh the file listing from the master bin
-            available_files = filebin_master.list()
+            available_files = db_master.list()
 
             # If no work is queued, wait before checking again
             if "workflow.json" not in available_files:
+                # Waiting for workflow.json
+                log_idle("pending")
+                
                 print(f"[slave:{name}] workflow.json not found — sleeping...")
                 await asyncio.sleep(random.uniform(5.0, 10.0))
                 continue
@@ -81,38 +85,36 @@ async def start_comfy_ui_slave(bin_location="kaggle_test", poll_interval: float 
             # --- Workflow found: proceed immediately, no sleep ---
 
             # Download and parse the workflow
-            json_string = filebin_master.download("workflow.json")
+            json_string = db_master.get("workflow.json")
             workflow = json.loads(json_string)
 
             # Announce this slave is alive and working
-            status = {
-                "name": name,
-                "status": "running",
-                "timestamp": datetime.now().isoformat(),
-            }
-            filebin_master.upload(status, f"slave_{name}.json")
+            log_busy("processing")
 
             # Run the workflow
             results = await run_with_log_monitor(
                 api,
-                name,
                 workflow,
                 output_node="Save Image",
-                log_path="/kaggle/working/comfyui_stderr.log",
+                log_path=f"{variables("root")}/comfyui_stderr.log",
                 poll_interval=2.0,
             )
 
             # Upload results to storage bin
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            for filename, image_data in results.items():
-                stamped_name = f"{timestamp}_{filename}"
-                filebin_storage.upload(image_data, f"{stamped_name}.png")
-                print(f"[slave:{name}] Saved: {stamped_name}.png")
 
-            # Mark as idle after completing a run
-            status["status"] = "idle"
-            status["last_run"] = timestamp
-            filebin_master.upload(status, f"slave_{name}.json")
+            # Scan through the list of items and save it
+            for filename, image_data in results.items():
+                # This is just a name
+                stamped_name = f"{timestamp}_{filename}"
+
+                # Uploading the file
+                db_storage.push(f"{stamped_name}.shard", {
+                    "data": base64.b64encode(image_data).decode("utf-8"),
+                })
+
+            # Idle now
+            log_idle()
 
             # Loop back immediately — pick up next workflow.json if already queued
 

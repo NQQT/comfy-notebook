@@ -53,3 +53,13 @@ class FileBin(RestService):
             },
         )
         return response.get("data", "")
+
+    def remove(self, filename: str):
+        # Remove an item from the server
+        remove.delete(
+            filename,
+            header={
+                "Cookie": "verified=2024-05-24",
+                "Accept": "*/*",
+            },
+        )
