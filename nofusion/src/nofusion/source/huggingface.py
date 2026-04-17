@@ -27,7 +27,7 @@ def huggingface_mirror(token: str, location: str, path_in_repo, repo_id: str):
     })
 
     # What temporary file path this should be?
-    filepath = f"ComfyUI/models/temporary/{filename}"
+    filepath = f"{variables("root")}/ComfyUI/models/temporary/{filename}"
 
     # Uploading to Huggingface
     login(token)
