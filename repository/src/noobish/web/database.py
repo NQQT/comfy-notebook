@@ -14,7 +14,7 @@ class Database():
 
     def push(self, primary_key: str, data: dict) -> RestServiceResponseBody:
         # Adding to database with data
-        return self.filebin.upload(stream, primary_key)
+        return self.filebin.upload(data, primary_key)
 
     def list(self):
         return self.filebin.list()
