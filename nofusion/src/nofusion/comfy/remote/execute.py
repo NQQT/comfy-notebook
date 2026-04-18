@@ -68,6 +68,8 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
     print(f"[slave:{name}] Starting. Watching bin: {stash_id}")
 
     last_uploaded: dict[str, bytes] = {}
+    cached_workflow: dict | None = None
+    cached_workflow_checksum: str | None = None
 
     while True:
         try:
@@ -97,16 +99,21 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
             print(
                 f"[slave:{name}] Using latest workflow file: {latest_workflow_name} (updated: {latest_workflow_file['updated']})")
 
-            # TODO latest_workflow_file["checksum"] should be check. If it is the same previously
-            #  There is no need to call "json_string = db_master.get(latest_workflow_name)" again, just load cached one
+            current_checksum = latest_workflow_file.get("checksum")
+            if current_checksum and current_checksum == cached_workflow_checksum and cached_workflow is not None:
+                print(f"[slave:{name}] Checksum unchanged ({current_checksum[:8]}…) — using cached workflow.")
+                workflow = cached_workflow
+            else:
+                json_string = db_master.get(latest_workflow_name)
+                if json_string is None:
+                    print(f"[slave:{name}] db_master.get('{latest_workflow_name}') failed — skipping...")
+                    await asyncio.sleep(random.uniform(5.0, 10.0))
+                    continue
 
-            json_string = db_master.get(latest_workflow_name)
-            if json_string is None:
-                print(f"[slave:{name}] db_master.get('{latest_workflow_name}') failed — skipping...")
-                await asyncio.sleep(random.uniform(5.0, 10.0))
-                continue
-
-            workflow = json_string if isinstance(json_string, dict) else json.loads(json_string)
+                workflow = json_string if isinstance(json_string, dict) else json.loads(json_string)
+                cached_workflow = workflow
+                cached_workflow_checksum = current_checksum
+                print(f"[slave:{name}] Fetched and cached workflow (checksum: {current_checksum}).")
 
             log_busy("processing")
 
