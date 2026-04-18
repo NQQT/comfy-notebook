@@ -75,7 +75,12 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
 
     while True:
         try:
+            # db_master.list() may return None on failure — skip iteration
             available_files = db_master.list()
+            if available_files is None:
+                print(f"[slave:{name}] db_master.list() failed — skipping...")
+                await asyncio.sleep(random.uniform(5.0, 10.0))
+                continue
 
             if not any(f["filename"] == "workflow.json" for f in available_files):
                 log_idle("pending")
@@ -83,7 +88,13 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 await asyncio.sleep(random.uniform(5.0, 10.0))
                 continue
 
+            # db_master.get() may return None on failure — skip iteration
             json_string = db_master.get("workflow.json")
+            if json_string is None:
+                print(f"[slave:{name}] db_master.get('workflow.json') failed — skipping...")
+                await asyncio.sleep(random.uniform(5.0, 10.0))
+                continue
+
             workflow = json_string if isinstance(json_string, dict) else json.loads(json_string)
 
             log_busy("processing")
@@ -95,6 +106,12 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 log_path=f"{variables('root')}/comfyui_stderr.log",
                 poll_interval=2.0,
             )
+
+            # run_with_log_monitor may theoretically return None — guard against it
+            if results is None:
+                print(f"[slave:{name}] run_with_log_monitor returned None — skipping upload...")
+                log_idle()
+                continue
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -109,9 +126,15 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                     continue
 
                 stamped_name = f"{timestamp}_{filename}"
-                db_storage.push(f"{stamped_name}.shard", {
+
+                # db_storage.push() may return None on failure — skip this
+                # file but continue processing remaining results
+                push_result = db_storage.push(f"{stamped_name}.shard", {
                     "data": base64.b64encode(image_data).decode("utf-8"),
                 })
+                if push_result is None:
+                    print(f"[slave:{name}] db_storage.push() failed for {stamped_name} — skipping...")
+                    continue
 
                 # Update the tracker only after a successful push
                 last_uploaded[filename] = image_data
