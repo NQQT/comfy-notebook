@@ -7,6 +7,7 @@ def _as_filebin_file(content: dict) -> dict:
         "filename": content.get("filename"),
         "filesize": content.get("bytes"),
         "checksum": content.get("sha256"),
+        "updated": content.get("updated_at")
     }
 
 

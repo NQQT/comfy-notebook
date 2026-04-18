@@ -82,6 +82,12 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 await asyncio.sleep(random.uniform(5.0, 10.0))
                 continue
 
+            # TODO - I need to fix this part
+            #  There are multiple files workflow.json, workflow2.json, workflow_1223.json etc...
+            #  The common thing is "workflow" within the filename and the extension is .json
+            #  f["updated"] also returns, with value like so: "2026-04-18T13:55:48.474541Z"
+            #  I want to select the latest one only
+
             if not any(f["filename"] == "workflow.json" for f in available_files):
                 log_idle("pending")
                 print(f"[slave:{name}] workflow.json not found — sleeping...")
