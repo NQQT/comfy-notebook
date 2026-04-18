@@ -8,28 +8,34 @@ import urllib.request
 from ..config import variables
 
 
-# For starting up a comfi you thread
 def start_comfy_ui_thread(host="127.0.0.1", port=8188):
     root_dir = variables('root')
+
+    # Single combined log file is sufficient — process either runs or dies
+    log_path = f"{root_dir}/comfyui.log"
+    log_file = open(log_path, "w")
+
     comfy_ui = variables('name.comfy')
     proc_holder = {}
 
-    log_stdout = open(f"{root_dir}/comfyui_stdout.log", "w")
-    log_stderr = open(f"{root_dir}/comfyui_stderr.log", "w")
-
     def _run():
-        proc = subprocess.Popen(
-            [sys.executable, "main.py", "--listen", host, "--port", str(port)],
-            cwd=f"{root_dir}/{comfy_ui}",
-            stdout=log_stdout,
-            stderr=log_stderr,
-        )
-        proc_holder["proc"] = proc
-        proc.wait()
-
-        # Close all the logs
-        log_stdout.close()
-        log_stderr.close()
+        try:
+            proc = subprocess.Popen(
+                [sys.executable, "main.py", "--listen", host, "--port", str(port)],
+                cwd=f"{root_dir}/{comfy_ui}",
+                stdout=log_file,
+                stderr=log_file,  # Merge stderr into the same file
+            )
+            proc_holder["proc"] = proc
+            proc.wait()
+        except Exception as e:
+            # Write the exception itself into the log so it's captured
+            log_file.write(f"\n[FATAL] Failed to start ComfyUI: {e}\n")
+            import traceback
+            log_file.write(traceback.format_exc())
+        finally:
+            log_file.flush()
+            log_file.close()
 
     def stop():
         proc = proc_holder.get("proc")
@@ -40,11 +46,9 @@ def start_comfy_ui_thread(host="127.0.0.1", port=8188):
             except subprocess.TimeoutExpired:
                 proc.kill()
 
-    # Starting the thread
     thread = threading.Thread(target=_run, name="comfyui-server", daemon=True)
     thread.start()
 
-    # Returning the thread
     return thread, stop
 
 
