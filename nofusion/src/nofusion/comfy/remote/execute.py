@@ -67,37 +67,42 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
 
     print(f"[slave:{name}] Starting. Watching bin: {stash_id}")
 
-    # Track last uploaded data per filename to deduplicate uploads.
-    # Keyed by filename, stores the raw bytes of the last pushed image.
-    # Persists across loop iterations so the same workflow.json re-run
-    # won't re-upload an image that hasn't changed.
     last_uploaded: dict[str, bytes] = {}
 
     while True:
         try:
-            # db_master.list() may return None on failure — skip iteration
             available_files = db_master.list()
             if available_files is None:
                 print(f"[slave:{name}] db_master.list() failed — skipping...")
                 await asyncio.sleep(random.uniform(5.0, 10.0))
                 continue
 
-            # TODO - I need to fix this part
-            #  There are multiple files workflow.json, workflow2.json, workflow_1223.json etc...
-            #  The common thing is "workflow" within the filename and the extension is .json
-            #  f["updated"] also returns, with value like so: "2026-04-18T13:55:48.474541Z"
-            #  I want to select the latest one only
+            # Find all files matching workflow*.json and pick the latest by updated timestamp
+            workflow_files = [
+                f for f in available_files
+                if f["filename"].startswith("workflow") and f["filename"].endswith(".json")
+            ]
 
-            if not any(f["filename"] == "workflow.json" for f in available_files):
+            if not workflow_files:
                 log_idle("pending")
-                print(f"[slave:{name}] workflow.json not found — sleeping...")
+                print(f"[slave:{name}] No workflow*.json found — sleeping...")
                 await asyncio.sleep(random.uniform(5.0, 10.0))
                 continue
 
-            # db_master.get() may return None on failure — skip iteration
-            json_string = db_master.get("workflow.json")
+            latest_workflow_file = max(
+                workflow_files,
+                key=lambda f: datetime.fromisoformat(f["updated"].rstrip("Z")),
+            )
+            latest_workflow_name = latest_workflow_file["filename"]
+            print(
+                f"[slave:{name}] Using latest workflow file: {latest_workflow_name} (updated: {latest_workflow_file['updated']})")
+
+            # TODO latest_workflow_file["checksum"] should be check. If it is the same previously
+            #  There is no need to call "json_string = db_master.get(latest_workflow_name)" again, just load cached one
+
+            json_string = db_master.get(latest_workflow_name)
             if json_string is None:
-                print(f"[slave:{name}] db_master.get('workflow.json') failed — skipping...")
+                print(f"[slave:{name}] db_master.get('{latest_workflow_name}') failed — skipping...")
                 await asyncio.sleep(random.uniform(5.0, 10.0))
                 continue
 
@@ -113,7 +118,6 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 poll_interval=2.0,
             )
 
-            # run_with_log_monitor may theoretically return None — guard against it
             if results is None:
                 print(f"[slave:{name}] run_with_log_monitor returned None — skipping upload...")
                 log_idle()
@@ -122,19 +126,12 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
             for filename, image_data in results.items():
-                # Skip upload if this exact image was the last one uploaded
-                # for this filename — handles A,A sequences.
-                # A,B,A is still fully uploaded because last_uploaded[filename]
-                # will be A after the first, then B after the second, so the
-                # third (A again) differs from the stored B and gets pushed.
                 if last_uploaded.get(filename) == image_data:
                     print(f"[slave:{name}] Skipping duplicate image: {filename}")
                     continue
 
                 stamped_name = f"{timestamp}_{filename}"
 
-                # db_storage.push() may return None on failure — skip this
-                # file but continue processing remaining results
                 push_result = db_storage.push(f"{stamped_name}.shard", {
                     "data": base64.b64encode(image_data).decode("utf-8"),
                 })
@@ -142,7 +139,6 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                     print(f"[slave:{name}] db_storage.push() failed for {stamped_name} — skipping...")
                     continue
 
-                # Update the tracker only after a successful push
                 last_uploaded[filename] = image_data
 
             log_idle()
