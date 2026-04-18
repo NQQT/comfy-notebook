@@ -62,68 +62,62 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
     stash_id = variables("stash")
     name = variables("name.agent")
 
-    # Master is controlled by the user
     db_master = Database(stash_id)
-    # Stash to store data
     db_storage = Database(f"{stash_id}_stash")
 
     print(f"[slave:{name}] Starting. Watching bin: {stash_id}")
 
+    # Track last uploaded data per filename to deduplicate uploads.
+    # Keyed by filename, stores the raw bytes of the last pushed image.
+    # Persists across loop iterations so the same workflow.json re-run
+    # won't re-upload an image that hasn't changed.
+    last_uploaded: dict[str, bytes] = {}
+
     while True:
         try:
-            # Refresh the file listing from the master bin
             available_files = db_master.list()
 
-            # If no work is queued, wait before checking again
             if not any(f["filename"] == "workflow.json" for f in available_files):
-                # Waiting for workflow.json
                 log_idle("pending")
-
                 print(f"[slave:{name}] workflow.json not found — sleeping...")
                 await asyncio.sleep(random.uniform(5.0, 10.0))
                 continue
 
-            # --- Workflow found: proceed immediately, no sleep ---
-
-            # Download and parse the workflow
             json_string = db_master.get("workflow.json")
+            workflow = json_string if isinstance(json_string, dict) else json.loads(json_string)
 
-            if isinstance(json_string, dict):
-                workflow = json_string  # Already parsed
-            else:
-                workflow = json.loads(json_string)
-
-                # Announce this slave is alive and working
             log_busy("processing")
 
-            # Run the workflow
             results = await run_with_log_monitor(
                 api,
                 workflow,
                 output_node="Save Image",
-                log_path=f"{variables("root")}/comfyui_stderr.log",
+                log_path=f"{variables('root')}/comfyui_stderr.log",
                 poll_interval=2.0,
             )
 
-            # Upload results to storage bin
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-            # Scan through the list of items and save it
             for filename, image_data in results.items():
-                # This is just a name
-                stamped_name = f"{timestamp}_{filename}"
+                # Skip upload if this exact image was the last one uploaded
+                # for this filename — handles A,A sequences.
+                # A,B,A is still fully uploaded because last_uploaded[filename]
+                # will be A after the first, then B after the second, so the
+                # third (A again) differs from the stored B and gets pushed.
+                if last_uploaded.get(filename) == image_data:
+                    print(f"[slave:{name}] Skipping duplicate image: {filename}")
+                    continue
 
-                # Uploading the file
+                stamped_name = f"{timestamp}_{filename}"
                 db_storage.push(f"{stamped_name}.shard", {
                     "data": base64.b64encode(image_data).decode("utf-8"),
                 })
 
-            # Idle now
-            log_idle()
+                # Update the tracker only after a successful push
+                last_uploaded[filename] = image_data
 
-            # Loop back immediately — pick up next workflow.json if already queued
+            log_idle()
 
         except Exception as e:
             print(f"[slave:{name}] Error during iteration: {e}")
-            # Brief backoff on error to avoid tight crash-loops
             await asyncio.sleep(random.uniform(5.0, 10.0))
