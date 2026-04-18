@@ -1,24 +1,33 @@
 from .services import FileBin, RestServiceResponseBody
 
 
-# Database structure
 class Database():
-    # For initiating the microservices
     def __init__(self, name: str):
-        # Setting up filebin
-        self.filebin = FileBin(name)
+        try:
+            self.filebin = FileBin(name)
+        except Exception:
+            self.filebin = None
 
-    def get(self, primary_key: str) -> RestServiceResponseBody:
-        # Selecting with primary key
-        return self.filebin.download(primary_key)
+    def get(self, primary_key: str):
+        try:
+            return self.filebin.download(primary_key)
+        except Exception:
+            return None
 
-    def push(self, primary_key: str, data: dict) -> RestServiceResponseBody:
-        # Adding to database with data
-        return self.filebin.upload(data, primary_key)
+    def push(self, primary_key: str, data: dict):
+        try:
+            return self.filebin.upload(data, primary_key)
+        except Exception:
+            return None
 
     def list(self):
-        return self.filebin.list()
+        try:
+            return self.filebin.list()
+        except Exception:
+            return None
 
     def delete(self, primary_key: str):
-        # Remove an item from the database
-        return self.filebin.remove(primary_key)
+        try:
+            return self.filebin.remove(primary_key)
+        except Exception:
+            return None
