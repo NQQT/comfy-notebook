@@ -105,6 +105,7 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 workflow = cached_workflow
             else:
                 json_string = db_master.get(latest_workflow_name)
+                print(json_string)
                 if json_string is None:
                     print(f"[slave:{name}] db_master.get('{latest_workflow_name}') failed — skipping...")
                     await asyncio.sleep(random.uniform(5.0, 10.0))
@@ -139,6 +140,7 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
 
                 stamped_name = f"{timestamp}_{filename}"
 
+                # Save to the cloud
                 push_result = db_storage.push(f"{stamped_name}.shard", {
                     "data": base64.b64encode(image_data).decode("utf-8"),
                 })
