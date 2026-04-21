@@ -18,14 +18,18 @@ def _log(status: str, details: str):
 
 # Log idle state
 def log_idle(details: str = ""):
-    _log("idle", details)
+    _log("inactive", details)
 
 
 # Log idle state
 def log_busy(details: str = ""):
-    _log("busy", details)
+    _log("active", details)
 
 
 # Log idle state
 def log_setup(details: str = ""):
-    _log("setup", details)
+    _log("attention", details)
+
+
+def log_error(details: str = ""):
+    _log("error", details)
