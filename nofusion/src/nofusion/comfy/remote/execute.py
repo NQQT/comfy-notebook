@@ -7,7 +7,6 @@ import time
 from datetime import datetime
 
 from noobish.web import Database
-
 from .logging import log_busy, log_idle
 from ..config import variables
 
@@ -118,6 +117,13 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
 
             log_busy("processing")
 
+            # Building the stamped name
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            stamped_name = f"{name}_{timestamp}.shard"
+
+            # Updated Stamped Name
+            db_storage.push(stamped_name, {})
+
             results = await run_with_log_monitor(
                 api,
                 workflow,
@@ -131,17 +137,14 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 log_idle()
                 continue
 
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-
             for filename, image_data in results.items():
                 if last_uploaded.get(filename) == image_data:
                     print(f"[slave:{name}] Skipping duplicate image: {filename}")
                     continue
 
-                stamped_name = f"{timestamp}_{filename}"
-
                 # Save to the cloud
-                push_result = db_storage.push(f"{stamped_name}.shard", {
+                push_result = db_storage.push(stamped_name, {
+                    "status": "completed",
                     "data": base64.b64encode(image_data).decode("utf-8"),
                 })
                 if push_result is None:

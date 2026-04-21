@@ -1,5 +1,5 @@
 from nofusion.comfy import initiate_comfy_ui_thread, start_comfy_ui_slave, log_setup, configure_variables
-from nofusion.config import variables,
+from nofusion.config import variables
 
 # Configuring Variables
 configure_variables()
