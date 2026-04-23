@@ -58,13 +58,15 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
     from comfy_api_simplified import ComfyApiWrapper
 
     api = ComfyApiWrapper("http://127.0.0.1:8188")
-    stash_id = variables("stash")
+    # Bin Identification
+    bin_id = variables("bin")
     name = variables("name.agent")
 
-    db_master = Database(stash_id)
-    db_storage = Database(f"{stash_id}_temp")
+    db_master = Database(bin_id)
+    # Set the temporary stash id incase workflow doesn't have stash_id
+    stash_id = "temporary"
 
-    print(f"[slave:{name}] Starting. Watching bin: {stash_id}")
+    print(f"[slave:{name}] Starting. Watching bin: {bin_id}")
 
     last_uploaded: dict[str, bytes] = {}
     cached_workflow: dict | None = None
@@ -94,9 +96,19 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 workflow_files,
                 key=lambda f: datetime.fromisoformat(f["updated"].rstrip("Z")),
             )
+
             latest_workflow_name = latest_workflow_file["filename"]
             print(
                 f"[slave:{name}] Using latest workflow file: {latest_workflow_name} (updated: {latest_workflow_file['updated']})")
+
+            # Updating the stash_id
+            parts = latest_workflow_name.removesuffix(".json").split("_")
+            if len(parts) >= 2:
+                stash_id = parts[-1]
+            else:
+                print(
+                    f"[slave:{name}] WARNING: Could not extract stash_id from '{latest_workflow_name}', using fallback.")
+                stash_id = "temporary"
 
             current_checksum = latest_workflow_file.get("checksum")
             if current_checksum and current_checksum == cached_workflow_checksum and cached_workflow is not None:
@@ -117,14 +129,19 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
             log_busy("processing")
 
             # Building a new stamp name
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            stamped_name = f"{name}_{timestamp}.shard"
+            unique_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+            # TODO Unique_id should be predictable.
+            #  Propose keeping a record of number of image successfully throughout the run
+            #  And this unique_id is simply the counter of the number of image saved to the cloud
 
-            # Updated Stamped Name
-            # db_storage.push(stamped_name, {
-            #     "status": "pending",
-            #     "data": ""
-            # })
+            # Setting the shard name
+            stamped_name = f"{name}_{unique_id}.shard"
+
+            # Create a pending file
+            Database(f"{bin_id}_{stash_id}").push(stamped_name, {
+                "status": "pending",
+                "data": ""
+            })
 
             results = await run_with_log_monitor(
                 api,
@@ -139,18 +156,20 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 log_idle()
                 continue
 
+            # Image creation successful
             for filename, image_data in results.items():
                 if last_uploaded.get(filename) == image_data:
                     print(f"[slave:{name}] Skipping duplicate image: {filename}")
                     continue
 
                 # Save to the cloud
-                push_result = db_storage.push(stamped_name, {
+                push_result = Database(f"{bin_id}_{stash_id}").push(stamped_name, {
                     # Setting the status to complete
                     "status": "completed",
                     # The data
                     "data": base64.b64encode(image_data).decode("utf-8"),
                 })
+
                 if push_result is None:
                     print(f"[slave:{name}] db_storage.push() failed for {stamped_name} — skipping...")
                     continue

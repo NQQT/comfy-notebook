@@ -6,8 +6,8 @@ from ..config import variables
 # Logging
 def _log(status: str, details: str):
     # Accessing the cloud database
-    stash_id = variables("stash");
-    name = variables("name.agent");
+    stash_id = variables("stash")
+    name = variables("name.agent")
 
     # Accessing database
     database = Database(f"{stash_id}_agent")
