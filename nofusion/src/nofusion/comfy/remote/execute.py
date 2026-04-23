@@ -11,7 +11,6 @@ from .logging import log_busy, log_idle
 from ..config import variables
 
 
-# This allows to run log monitoring
 async def run_with_log_monitor(api, workflow, output_node, log_path, poll_interval=2.0):
     loop = asyncio.get_event_loop()
     stop_event = threading.Event()
@@ -58,12 +57,10 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
     from comfy_api_simplified import ComfyApiWrapper
 
     api = ComfyApiWrapper("http://127.0.0.1:8188")
-    # Bin Identification
     bin_id = variables("bin")
     name = variables("name.agent")
 
     db_master = Database(bin_id)
-    # Set the temporary stash id incase workflow doesn't have stash_id
     stash_id = "temporary"
 
     print(f"[slave:{name}] Starting. Watching bin: {bin_id}")
@@ -71,6 +68,11 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
     last_uploaded: dict[str, bytes] = {}
     cached_workflow: dict | None = None
     cached_workflow_checksum: str | None = None
+
+    # Persistent counter for successfully saved images across the run lifetime.
+    # This makes shard names deterministic and monotonically increasing,
+    # unlike timestamps which can collide or vary across restarts.
+    saved_image_count = 0
 
     while True:
         try:
@@ -80,7 +82,6 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 await asyncio.sleep(random.uniform(5.0, 10.0))
                 continue
 
-            # Find all files matching workflow*.json and pick the latest by updated timestamp
             workflow_files = [
                 f for f in available_files
                 if f["filename"].startswith("workflow") and f["filename"].endswith(".json")
@@ -99,15 +100,18 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
 
             latest_workflow_name = latest_workflow_file["filename"]
             print(
-                f"[slave:{name}] Using latest workflow file: {latest_workflow_name} (updated: {latest_workflow_file['updated']})")
+                f"[slave:{name}] Using latest workflow file: {latest_workflow_name} "
+                f"(updated: {latest_workflow_file['updated']})"
+            )
 
-            # Updating the stash_id
             parts = latest_workflow_name.removesuffix(".json").split("_")
             if len(parts) >= 2:
                 stash_id = parts[-1]
             else:
                 print(
-                    f"[slave:{name}] WARNING: Could not extract stash_id from '{latest_workflow_name}', using fallback.")
+                    f"[slave:{name}] WARNING: Could not extract stash_id from "
+                    f"'{latest_workflow_name}', using fallback."
+                )
                 stash_id = "temporary"
 
             current_checksum = latest_workflow_file.get("checksum")
@@ -128,16 +132,11 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
 
             log_busy("processing")
 
-            # Building a new stamp name
-            unique_id = datetime.now().strftime("%Y%m%d_%H%M%S")
-            # TODO Unique_id should be predictable.
-            #  Propose keeping a record of number of image successfully throughout the run
-            #  And this unique_id is simply the counter of the number of image saved to the cloud
-
-            # Setting the shard name
+            # Use the saved image counter as the unique_id.
+            # Zero-padded to 6 digits so lexicographic and numeric sort order agree.
+            unique_id = f"{saved_image_count:06d}"
             stamped_name = f"{name}_{unique_id}.shard"
 
-            # Create a pending file
             Database(f"{bin_id}_{stash_id}").push(stamped_name, {
                 "status": "pending",
                 "data": ""
@@ -156,17 +155,13 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 log_idle()
                 continue
 
-            # Image creation successful
             for filename, image_data in results.items():
                 if last_uploaded.get(filename) == image_data:
                     print(f"[slave:{name}] Skipping duplicate image: {filename}")
                     continue
 
-                # Save to the cloud
                 push_result = Database(f"{bin_id}_{stash_id}").push(stamped_name, {
-                    # Setting the status to complete
                     "status": "completed",
-                    # The data
                     "data": base64.b64encode(image_data).decode("utf-8"),
                 })
 
@@ -175,6 +170,9 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                     continue
 
                 last_uploaded[filename] = image_data
+                # Increment only on confirmed successful cloud save
+                saved_image_count += 1
+                print(f"[slave:{name}] Saved image #{saved_image_count} as {stamped_name}")
 
             log_idle()
 
