@@ -62,7 +62,7 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
     name = variables("name.agent")
 
     db_master = Database(stash_id)
-    db_storage = Database(f"{stash_id}_stash")
+    db_storage = Database(f"{stash_id}_temp")
 
     print(f"[slave:{name}] Starting. Watching bin: {stash_id}")
 
@@ -104,7 +104,6 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
                 workflow = cached_workflow
             else:
                 json_string = db_master.get(latest_workflow_name)
-                print(json_string)
                 if json_string is None:
                     print(f"[slave:{name}] db_master.get('{latest_workflow_name}') failed — skipping...")
                     await asyncio.sleep(random.uniform(5.0, 10.0))
@@ -117,12 +116,15 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
 
             log_busy("processing")
 
-            # Building the stamped name
+            # Building a new stamp name
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             stamped_name = f"{name}_{timestamp}.shard"
 
             # Updated Stamped Name
-            db_storage.push(stamped_name, {})
+            # db_storage.push(stamped_name, {
+            #     "status": "pending",
+            #     "data": ""
+            # })
 
             results = await run_with_log_monitor(
                 api,
@@ -144,7 +146,9 @@ async def start_comfy_ui_slave(poll_interval: float = 5.0):
 
                 # Save to the cloud
                 push_result = db_storage.push(stamped_name, {
+                    # Setting the status to complete
                     "status": "completed",
+                    # The data
                     "data": base64.b64encode(image_data).decode("utf-8"),
                 })
                 if push_result is None:
