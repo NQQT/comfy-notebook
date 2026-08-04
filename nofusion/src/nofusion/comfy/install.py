@@ -56,7 +56,7 @@ def install_comfy_ui(checkout_version=None):
 
     # Additional installation to use
     install_package(
-        "pillow==10.2.0",
+        "pillow",
         "insightface",
         "onnxruntime",
         "onnxruntime-gpu",
