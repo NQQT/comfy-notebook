@@ -81,6 +81,9 @@ def install_comfy_ui(checkout_version=None):
     fetch_custom_node("https://github.com/comfyscript/ComfyUI-CloudClient")
     # For Upscaling and So on
     # fetch_custom_node("https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler")
+    # For Upscaling and so on
+    fetch_custom_node("https://github.com/Comfy-Org/Nvidia_RTX_Nodes_ComfyUI")
+
     # For LTX2.3
     fetch_custom_node("https://github.com/TenStrip/10S-Comfy-nodes")
 
