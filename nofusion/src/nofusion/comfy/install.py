@@ -88,3 +88,5 @@ def install_comfy_ui(checkout_version=None):
 
     # Krea2 Custom Nodes
     fetch_custom_node("https://github.com/lbouaraba/comfyui-krea2edit")
+    # Cleaning and Purging
+    fetch_custom_node("https://github.com/chflame163/ComfyUI_LayerStyle")
