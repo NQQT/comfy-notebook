@@ -92,3 +92,6 @@ def install_comfy_ui(checkout_version=None):
     # Cleaning and Purging
     fetch_custom_node("https://github.com/chflame163/ComfyUI_LayerStyle")
     fetch_custom_node("https://github.com/LAOGOU-666/Comfyui-Memory_Cleanup")
+
+    # For minimax H3
+    fetch_custom_node("https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo")
