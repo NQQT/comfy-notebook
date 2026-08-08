@@ -60,7 +60,8 @@ def install_comfy_ui(checkout_version=None):
         "insightface",
         "onnxruntime",
         "onnxruntime-gpu",
-        "matplotlib-inline"
+        "matplotlib-inline",
+        "sageattention==2.2.0"
     )
 
     # For installing custom nodes
@@ -92,6 +93,9 @@ def install_comfy_ui(checkout_version=None):
     # Cleaning and Purging
     fetch_custom_node("https://github.com/chflame163/ComfyUI_LayerStyle")
     fetch_custom_node("https://github.com/LAOGOU-666/Comfyui-Memory_Cleanup")
+
+    # Spectrum
+    fetch_custom_node("https://github.com/benjiyaya/ComfyUI-Spectrum")
 
     # For minimax H3
     fetch_custom_node("https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo")
