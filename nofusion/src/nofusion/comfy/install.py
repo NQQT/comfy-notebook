@@ -61,7 +61,35 @@ def install_comfy_ui(checkout_version=None):
         "onnxruntime",
         "onnxruntime-gpu",
         "matplotlib-inline",
-        "sageattention==2.2.0"
+    )
+
+    # SageAttention 2.2.0 (provides SageAttention2++ kernels) is NOT published
+    # on PyPI — https://pypi.org/pypi/sageattention/json shows the latest
+    # published release is 1.0.6 (2024-11-20), which is the old Triton-only
+    # v1 branch. 2.x must be installed from the GitHub repo at tag v2.2.0
+    # (commit eb615cf6cf4d221338033340ee2de1c37fbdba4a).
+    #
+    # --no-build-isolation is MANDATORY: v2.2.0's setup.py imports torch
+    # (torch.utils.cpp_extension.CUDAExtension) at module level to compile
+    # csrc/qattn CUDA kernels, but its pyproject.toml only declares
+    # setuptools/wheel/packaging as build requirements — an isolated pip
+    # build env would fail on `import torch`. Because isolation is off, pip
+    # also does NOT auto-provision those build requirements, so they are
+    # installed explicitly first (versions mirror pyproject.toml).
+    #
+    # Build prerequisites that must exist in the environment BEFORE this runs:
+    #   - torch already installed (modal_comfy_rtx6000.py installs the cu132
+    #     wheels in setup_comfy() BEFORE calling install_comfy_ui)
+    #   - nvcc (CUDA toolkit >= 12.8 for sm_120/Blackwell) at $CUDA_HOME/bin/nvcc
+    #   - TORCH_CUDA_ARCH_LIST set (setup.py aborts with "No target compute
+    #     capabilities" when it cannot probe a GPU, e.g. GPU-less image builds)
+    #   - a C++ toolchain + libgomp (CXX_FLAGS use -fopenmp -lgomp)
+    shell_command(
+        f'{pip} install "setuptools>=62,<75" "wheel>=0.38,<0.44" "packaging>=21,<24" ninja'
+    )
+    shell_command(
+        f"{pip} install --no-build-isolation "
+        "git+https://github.com/thu-ml/SageAttention.git@v2.2.0"
     )
 
     # For installing custom nodes
